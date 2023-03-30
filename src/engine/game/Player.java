@@ -10,8 +10,8 @@ public class Player extends PlayerStats{
 
     public static List<Player> playerList = new ArrayList<>();
 
-    public Player(int ID, String name,int teamID, int championID, Integer maxHP, Integer currentHP, Integer maxR, Integer currentR, int CDRemaining[], Boolean isDead) {
-        super(ID, name,teamID, championID, maxHP, currentHP, maxR, currentR, CDRemaining, isDead);
+    public Player(int ID, String name,int teamID, int championID, Integer maxHP, Integer currentHP, Integer maxR, Integer currentR, String resource, int CDRemaining[], Boolean isDead) {
+        super(ID, name,teamID, championID, maxHP, currentHP, maxR, currentR, resource, CDRemaining, isDead);
     }
 
     static int id;
@@ -20,6 +20,7 @@ public class Player extends PlayerStats{
     static int currentHP;
     static int maxR;
     static int currentR;
+    static String resource;
     static int CDRemaining[] = {0,0,0,0,0};
     static boolean isDead;
 
@@ -27,7 +28,7 @@ public class Player extends PlayerStats{
     public static List<Player> loadStats(String name, int classID, List<Champion> championList){
         setPlayerStats(classID, championList);
         generatePlayerID();
-        playerList.add(new Player(id,name,teamID,classID,maxHP,currentHP,maxR,currentR,CDRemaining,isDead));
+        playerList.add(new Player(id,name,teamID,classID,maxHP,currentHP,maxR,currentR,resource,CDRemaining,isDead));
 
         return playerList;
     }
@@ -50,6 +51,16 @@ public class Player extends PlayerStats{
             currentR = maxR;
         }else if(championList.get(classID).getResource() == 1){
             currentR = 0;
+        }
+
+        switch(championList.get(classID).getResource()){
+            case 0:
+                resource = "Mana";
+                break;
+            case 1:
+                resource = "Rage";
+                break;
+
         }
 
         isDead = false;

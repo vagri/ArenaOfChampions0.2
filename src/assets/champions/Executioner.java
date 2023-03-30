@@ -29,20 +29,21 @@ public class Executioner extends Champion {
         championList.add(new Champion(championID,name,abilities,maxHP,maxR,resourceID,type));
     }
 
-    public static void play(int attackerID, List<Player> playerList){
+    public static void play(int casterID, List<Player> playerList){
         System.out.println("Choose ability to cast:");
-        availability[1] = MortalStrike.checkAvailability(attackerID,playerList);
-
-        System.out.println("5) Do Nothing");
-
-        Scanner reader = new Scanner(System.in);
-        int choise = reader.nextInt();
 
         do{
+            availability[1] = MortalStrike.checkAvailability(casterID,playerList);
+
+            System.out.println("5) Do Nothing");
+
+            Scanner reader = new Scanner(System.in);
+            int choise = reader.nextInt();
+
             switch(choise){
                 case 1:
                     if(availability[1]){
-                        finished = MortalStrike.cast(attackerID,playerList);
+                        finished = MortalStrike.cast(casterID,playerList);
                     }else{
                         System.out.println("This ability cannot be cast!");
                     }
@@ -66,7 +67,7 @@ public class Executioner extends Champion {
             if(!finished){
                 System.out.println("Choose another ability.");
             }
-        }while(finished = false);
+        }while(finished == false);
 
     }
 }

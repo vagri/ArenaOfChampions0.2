@@ -4,8 +4,11 @@ import assets.Action;
 
 public class ApplyShield extends Action {
 
-    public ApplyShield(int effectID, String name, int duration, boolean stackable, boolean isVisible) {
-        super(effectID, name, duration, stackable, isVisible);
+    public ApplyShield(int effectID, String name) {
+        super(effectID, name);
     }
+
+    static int actionID = 3;
+
 
 }

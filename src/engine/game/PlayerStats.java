@@ -1,5 +1,7 @@
 package engine.game;
 
+import java.util.Arrays;
+
 class PlayerStats {
 
     private int ID;
@@ -10,10 +12,11 @@ class PlayerStats {
     private int currentHP;
     private int maxR;
     private int currentR;
+    private String Resource;
     private int CDRemaining[];
     private boolean isDead;
 
-    public PlayerStats(int ID, String name,int teamID, int championID, int maxHP, int currentHP, int maxR, int currentR,int CDRemaining[], boolean isDead) {
+    public PlayerStats(int ID, String name, int teamID, int championID, int maxHP, int currentHP, int maxR, int currentR, String resource, int[] CDRemaining, boolean isDead) {
         this.ID = ID;
         this.name = name;
         this.teamID = teamID;
@@ -22,6 +25,7 @@ class PlayerStats {
         this.currentHP = currentHP;
         this.maxR = maxR;
         this.currentR = currentR;
+        Resource = resource;
         this.CDRemaining = CDRemaining;
         this.isDead = isDead;
     }
@@ -90,20 +94,6 @@ class PlayerStats {
         isDead = dead;
     }
 
-    @Override
-    public String toString() {
-        return "PlayerStats{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", championID=" + championID +
-                ", maxHP=" + maxHP +
-                ", currentHP=" + currentHP +
-                ", maxR=" + maxR +
-                ", currentR=" + currentR +
-                ", isDead=" + isDead +
-                '}';
-    }
-
     public int getTeamID() {
         return teamID;
     }
@@ -118,5 +108,19 @@ class PlayerStats {
 
     public void setCDRemaining(int[] CDRemaining) {
         this.CDRemaining = CDRemaining;
+    }
+
+    public String getResource() {
+        return Resource;
+    }
+
+    public void setResource(String resource) {
+        Resource = resource;
+    }
+
+    @Override
+    public String toString() {
+        return "Player " +  ID + ": " + name + ", team=" + teamID +", HP=" + currentHP +
+                "/" + maxHP + ", " + Resource + "=" + currentR + "/" + maxR;
     }
 }

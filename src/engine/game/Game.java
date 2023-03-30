@@ -2,14 +2,15 @@ package engine.game;
 
 import assets.Ability;
 import assets.Champion;
+import assets.Effect;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends Player{
 
-    public Game(int ID, String name, int teamID, int championID, Integer maxHP, Integer currentHP, Integer maxR, Integer currentR, int CDRemaining[], Boolean isDead) {
-        super(ID, name, teamID, championID, maxHP, currentHP, maxR, currentR, CDRemaining, isDead);
+    public Game(int ID, String name, int teamID, int championID, Integer maxHP, Integer currentHP, Integer maxR, Integer currentR ,String resource, int CDRemaining[], Boolean isDead) {
+        super(ID, name, teamID, championID, maxHP, currentHP, maxR, currentR, resource, CDRemaining, isDead);
     }
 
     static List<Player> playerList = new ArrayList<>();
@@ -31,7 +32,7 @@ public class Game extends Player{
         }
 
         System.out.println("Starting Game...");
-        roundCounter++;
+
         do{
             round();
         }while(Player.isTeamDead() == 0);
@@ -46,6 +47,7 @@ public class Game extends Player{
     }
 
     public static void round(){
+        roundCounter++;
         System.out.println("Round " + roundCounter + "!");
 
         for(Player player : playerList){
@@ -59,10 +61,10 @@ public class Game extends Player{
 
     public static void turn(int casterid){
 
+        casterid--;
         System.out.println("It is " + playerList.get(casterid).getName() + "'s turn.");
 
-
-
+        Effect.update(casterid);
         lowerCD(casterid);
         Ability.choose(casterid, playerList);
 

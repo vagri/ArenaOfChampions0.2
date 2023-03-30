@@ -44,41 +44,46 @@ public class Ability {
         for(Player player : playerList){
             System.out.println(player.toString());
         }
-        System.out.println("Press 9 to choose another ability.");
+        System.out.println("Press 0 to choose another ability.");
 
-        int targetID;
+        int targetID,realID;
         boolean targetfound = false;
 
         do {
             Scanner reader = new Scanner(System.in);
             targetID = reader.nextInt();
 
-            for (int i = 0; i < playerList.size(); i++) {
-                if (playerList.get(i).getID() == targetID) {
-                    targetfound = true;
+            if(targetID == 0){
+                targetID = -2;
+            }else {
+                for (int i = 0; i < playerList.size(); i++) {
+                    if (playerList.get(i).getID() == targetID) {
+                        targetfound = true;
+                        targetID = i;
+                        System.out.println("targetid is found and is " + targetID);
+                    }
                 }
-            }
-
-            if(!targetfound){
-                System.out.println("This player does not exist");
-                targetID=-1;
-                System.out.println("Pick another target!");
-            }else if(playerList.get(casterID).getID() == playerList.get(targetID).getID() && !targetself){
-                System.out.println("You cannot target yourself!");
-                targetID=-1;
-                System.out.println("Pick another target!");
-            }else if (playerList.get(casterID).getTeamID() == playerList.get(targetID).getTeamID() &&!targetsAllies) {
-                System.out.println("You cannot target an ally!");
-                targetID=-1;
-                System.out.println("Pick another target!");
-            }else if(playerList.get(casterID).getTeamID() != playerList.get(targetID).getTeamID() &&!targetsEnemies){
-                System.out.println("You cannot target an enemy!");
-                targetID=-1;
-                System.out.println("Pick another target!");
-            }else if(playerList.get(targetID).isDead()){
-                System.out.println("This target is dead!");
-                targetID=-1;
-                System.out.println("Pick another target!");
+                if (!targetfound) {
+                    System.out.println("This player does not exist");
+                    targetID = -1;
+                    System.out.println("Pick another target!");
+                } else if (playerList.get(casterID).getID() == playerList.get(targetID).getID() && !targetself) {
+                    System.out.println("You cannot target yourself!");
+                    targetID = -1;
+                    System.out.println("Pick another target!");
+                } else if (playerList.get(casterID).getTeamID() == playerList.get(targetID).getTeamID() && playerList.get(casterID).getID() != playerList.get(targetID).getID() && !targetsAllies) {
+                    System.out.println("You cannot target an ally!");
+                    targetID = -1;
+                    System.out.println("Pick another target!");
+                } else if (playerList.get(casterID).getTeamID() != playerList.get(targetID).getTeamID() && !targetsEnemies) {
+                    System.out.println("You cannot target an enemy!");
+                    targetID = -1;
+                    System.out.println("Pick another target!");
+                } else if (playerList.get(targetID).isDead()) {
+                    System.out.println("This target is dead!");
+                    targetID = -1;
+                    System.out.println("Pick another target!");
+                }
             }
         }while(targetID == -1);
 
