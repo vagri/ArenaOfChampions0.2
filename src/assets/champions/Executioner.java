@@ -1,6 +1,7 @@
 package assets.champions;
 
 import assets.Champion;
+import assets.abilities.Bloodthirster;
 import assets.abilities.MortalStrike;
 import engine.game.Player;
 
@@ -30,10 +31,12 @@ public class Executioner extends Champion {
     }
 
     public static void play(int casterID, List<Player> playerList){
-        System.out.println("Choose ability to cast:");
 
+
+        System.out.println("Choose ability to cast:");
         do{
             availability[1] = MortalStrike.checkAvailability(casterID,playerList);
+            availability[2] = Bloodthirster.checkAvailability(casterID,playerList);
 
             System.out.println("5) Do Nothing");
 
@@ -49,7 +52,11 @@ public class Executioner extends Champion {
                     }
                     break;
                 case 2:
-
+                    if(availability[2]){
+                        finished = Bloodthirster.cast(casterID,playerList);
+                    }else{
+                        System.out.println("This ability cannot be cast!");
+                    }
                     break;
                 case 3:
 

@@ -31,7 +31,14 @@ public class ManaShield extends Ability{
 
     public static boolean checkAvailability(int playerID, List<Player> playerList){
         System.out.print(name);
-        System.out.println(info);
+        if(playerList.get(playerID).getCurrentR() >= cost){
+            System.out.println(info);
+            available = true;
+        }else{
+            System.out.println("Not enough mana.");
+            available = false;
+        }
+
 
         return available;
     }

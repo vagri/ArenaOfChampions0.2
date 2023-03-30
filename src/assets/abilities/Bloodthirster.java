@@ -2,23 +2,23 @@ package assets.abilities;
 
 import assets.Ability;
 import assets.actions.DealDamage;
+import assets.actions.HealHealth;
 import assets.actions.RestoreResource;
 import engine.game.Player;
 
 import java.util.List;
 
-public class MortalStrike extends Ability {
-
-    public MortalStrike(int abilityID, String name, int value, int cost, int CD, int isCastable, int isPassive) {
+public class Bloodthirster extends Ability{
+    public Bloodthirster(int abilityID, String name, int value, int cost, int CD, int isCastable, int isPassive) {
         super(abilityID, name, value, cost, CD, isCastable, isPassive);
     }
 
     static int abilityID = 1;
-    static String name = "1) Mortal Strike: ";
-    static String info = "Deal 50 damage to an enemy. Generates 20 rage.";
-    static int value = 50;
-    static int value2 = 20;
-    static int cost = 0;
+    static String name = "2) Bloodthrister: ";
+    static String info = "Deal 40 damage to an enemy and heal 40 health. Costs 25 rage.";
+    static int value = 40;
+
+    static int cost = 25;
     static boolean targetsEnemies = true;
     static boolean targetsAllies = false;
     static boolean targetSelf = false;
@@ -28,7 +28,13 @@ public class MortalStrike extends Ability {
 
     public static boolean checkAvailability(int playerID, List<Player> playerList){
         System.out.print(name);
-        System.out.println(info);
+        if(playerList.get(playerID).getCurrentR() >= cost){
+            System.out.println(info);
+            available = true;
+        }else{
+            System.out.println("Not enough rage.");
+            available = false;
+        }
 
         return available;
     }
@@ -41,13 +47,11 @@ public class MortalStrike extends Ability {
             finished = false;
         }else{
             DealDamage.call(casterID, targetID, value, playerList);
-            RestoreResource.call(casterID, casterID, value2, playerList);
+            HealHealth.call(casterID, casterID, value, playerList);
             finished = true;
-        }
-        if(!playerList.get(targetID).isDead()){
-            GrieviousWounds.cast(casterID, targetID, playerList);
         }
 
         return finished;
     }
 }
+

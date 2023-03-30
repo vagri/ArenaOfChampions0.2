@@ -23,7 +23,7 @@ public class Mage extends Champion {
     static int type = 0;
 
     static boolean[] availability = {true,true,true,true};
-    static boolean finished = false;
+    static boolean finished;
 
 
     public static void load(){
@@ -32,15 +32,16 @@ public class Mage extends Champion {
 
     public static void play(int attackerID, List<Player> playerList){
         System.out.println("Choose ability to cast:");
-
-        availability[3] = ManaShield.checkAvailability(attackerID,playerList);
-
-        System.out.println("5) Do Nothing");
-
-        Scanner reader = new Scanner(System.in);
-        int choise = reader.nextInt();
-
+        finished = false;
         do{
+
+            availability[3] = ManaShield.checkAvailability(attackerID,playerList);
+
+            System.out.println("5) Do Nothing");
+
+            Scanner reader = new Scanner(System.in);
+            int choise = reader.nextInt();
+
             switch(choise){
                 case 1:
 
@@ -69,7 +70,7 @@ public class Mage extends Champion {
             if(!finished){
                 System.out.println("Choose another ability.");
             }
-        }while(finished = false);
+        }while(finished == false);
 
     }
 }

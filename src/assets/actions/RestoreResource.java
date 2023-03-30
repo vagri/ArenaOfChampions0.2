@@ -11,7 +11,7 @@ public class RestoreResource extends Action {
         super(effectID, name);
     }
 
-    static int actionID = 3;
+    static int actionID = 1;
 
     public static void call(int casterID, int targetID, int value, List<Player> playerList){
 

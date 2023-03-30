@@ -47,7 +47,6 @@ public class Effect {
         }
 
         for (Effect effect : effectList) {
-            System.out.println("effects");
             System.out.println(effect.toString());
         }
 
@@ -150,14 +149,11 @@ public class Effect {
 
     @Override
     public String toString() {
-        return "Effect{" +
-                "effectID=" + effectID +
-                ", name='" + name + '\'' +
-                ", playerID=" + playerID +
-                ", value=" + value +
-                ", duration=" + duration +
-                ", stackable=" + stackable +
-                ", isVisible=" + isVisible +
-                '}';
+        if(isVisible){
+            return playerList.get(playerID).getName() + ": "+ name + ", value=" + value +", duration=" + duration;
+        }else{
+            return "";
+        }
+
     }
 }
