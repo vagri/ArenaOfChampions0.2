@@ -25,12 +25,6 @@ public class Game extends Player{
         playerList = Player.loadStats(name1, classID1, championList);
         playerList = Player.loadStats(name2, classID2, championList);
 
-
-
-        for(Player player : playerList){
-            System.out.println(player.toString());
-        }
-
         System.out.println("Starting Game...");
 
         do{
@@ -48,11 +42,7 @@ public class Game extends Player{
 
     public static void round(){
         roundCounter++;
-        System.out.println("Round " + roundCounter + "!");
-
-        for(Player player : playerList){
-            System.out.println(player.toString());
-        }
+        System.out.println("==================={ Round " + roundCounter + "! }========================");
 
         turn(playerList.get(0).getID());
         turn(playerList.get(1).getID());
@@ -61,13 +51,18 @@ public class Game extends Player{
 
     public static void turn(int casterid){
 
-        casterid--;
-        System.out.println("It is " + playerList.get(casterid).getName() + "'s turn.");
+        for(Player player : playerList){
+            System.out.println(player.toString());
+        }
 
+        casterid--;
+        System.out.println("________________[ Effects ]____________________");
         Effect.update(casterid);
         lowerCD(casterid);
-        Ability.choose(casterid, playerList);
 
+        System.out.println("-----------------( It is " + playerList.get(casterid).getName() + "'s turn. )-----------------");
+
+        Ability.choose(casterid, playerList);
     }
 
     public static void lowerCD(int id){

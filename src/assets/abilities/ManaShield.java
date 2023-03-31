@@ -20,7 +20,7 @@ public class ManaShield extends Ability{
     static String info = "Shield yourself for 40 damage for the next 2 rounds. Enemies attacking the mage will take damage equal to the amount of shield broken. Costs 40 Mana.";
     static int value = 40;
     static int cost = 40;
-    static boolean stackable = true;
+    static boolean stackable = false;
     static int duration = 2;
     static boolean targetsEnemies = false;
     static boolean targetsAllies = false;

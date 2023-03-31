@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ThornShield extends Effect {
 
-    public ThornShield(int effectID, String name, int playerID,int value, int duration, int abilityID, boolean stackable, boolean isVisible) {
-        super(effectID, name, playerID,value, duration,abilityID, stackable, isVisible);
+    public ThornShield(int effectID, String name, int casterID, int targetID, int value, int duration, int abilityID, boolean stackable, boolean isVisible) {
+        super(effectID, name, casterID, targetID, value, duration, abilityID, stackable, isVisible);
     }
 
     static int effectID = 4;
@@ -18,12 +18,12 @@ public class ThornShield extends Effect {
     public static void add(int casterID, int targetID, int amount, int duration, int abilityID, boolean stackable, List<Player> playerList, List<Effect> effectList){
         if(!stackable){
             for(int i = 0;i<effectList.size();i++) {
-                if(effectList.get(targetID).getAbilityID() == effectList.get(i).getAbilityID()) {
+                if(effectList.get(i).getAbilityID() == abilityID) {
                     effectList.remove(i);
                 }
             }
         }
-        effectList.add(new Effect(effectID,name,targetID,amount,duration,abilityID,stackable,true));
+        effectList.add(new Effect(effectID,name,casterID,targetID,amount,duration,abilityID,stackable,true));
 
         if(playerList.get(casterID).getID() == playerList.get(targetID).getID()) {
             System.out.println(playerList.get(casterID).getName() + " applied Thorns equal to " + amount
@@ -41,7 +41,7 @@ public class ThornShield extends Effect {
 
         do {               //thornshield.activate works the same way as shield.destroy, with the difference that here the caster takes damage
             for (int i = 0; i < effectList.size(); i++) {
-                if(effectList.get(i).getPlayerID() == targetID) {
+                if(effectList.get(i).getCasterID() == targetID) {
                     if (effectList.get(i).getEffectID() == 4) {
                         if (minDuration > effectList.get(i).getDuration()) {
                             minDuration = effectList.get(i).getDuration();

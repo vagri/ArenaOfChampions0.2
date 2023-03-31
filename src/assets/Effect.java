@@ -12,7 +12,8 @@ import static engine.game.Player.playerList;
 public class Effect {
     private int effectID;
     private String name;
-    private int playerID;
+    private int casterID;
+    private int targetID;
     private int value;
     private int duration;
     private int abilityID;
@@ -20,10 +21,11 @@ public class Effect {
     private boolean isVisible;
     public static List<Effect> effectList = new ArrayList<>();
 
-    public Effect(int effectID, String name,int playerID, int value, int duration, int abilityID, boolean stackable, boolean isVisible) {
+    public Effect(int effectID, String name,int casterID, int targetID, int value, int duration, int abilityID, boolean stackable, boolean isVisible) {
         this.effectID = effectID;
         this.name = name;
-        this.playerID = playerID;
+        this.casterID = casterID;
+        this.targetID = targetID;
         this.value = value;
         this.duration = duration;
         this.abilityID = abilityID;
@@ -36,28 +38,39 @@ public class Effect {
     }
 
     public static List<Effect> update(int casterID){
+        int activeEffects = 0;
+
         for(int i = 0 ; i < effectList.size();i++){
-            if(effectList.get(i).getPlayerID() == casterID) {
+            if(effectList.get(i).getTargetID() == casterID) {
+                activeEffects++;
                 effectList.get(i).setDuration(effectList.get(i).getDuration() - 1);
-                if (effectList.get(i).getDuration() == 0) {
+                if (effectList.get(i).getDuration() < 0) {
                     effectList.remove(i);
+                    activeEffects--;
                 }
+
             }
 
         }
-
-        for (Effect effect : effectList) {
-            System.out.println(effect.toString());
+        if(activeEffects > 0){
+            for (Effect effect : effectList) {
+                System.out.println(effect.toString());
+            }
+        }else{
+            System.out.println("None.");
         }
+
 
         return effectList;
     }
 
     public static int checkPlayerEffects(int casterID, int targetID, int value, int actionID){
 
+
+
         if(actionID == 0) {
             for (int i = 0; i < effectList.size(); i++) {
-                if(effectList.get(i).getPlayerID() == targetID) {
+                if(effectList.get(i).getCasterID() == targetID) {
                     if (effectList.get(i).getEffectID() == 4) {
                         value = ThornShield.activate(casterID, targetID, value, playerList);
                     }
@@ -139,21 +152,31 @@ public class Effect {
         isVisible = visible;
     }
 
-    public int getPlayerID() {
-        return playerID;
-    }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
 
     @Override
     public String toString() {
         if(isVisible){
-            return playerList.get(playerID).getName() + ": "+ name + ", value=" + value +", duration=" + duration;
+            return playerList.get(targetID).getName() + ": "+ name + ", value=" + value +", remaining rounds=" + duration + ", from: " + playerList.get(casterID).getName();
         }else{
             return "";
         }
 
+    }
+
+    public int getTargetID() {
+        return targetID;
+    }
+
+    public void setTargetID(int targetID) {
+        this.targetID = targetID;
+    }
+
+    public int getCasterID() {
+        return casterID;
+    }
+
+    public void setCasterID(int casterID) {
+        this.casterID = casterID;
     }
 }

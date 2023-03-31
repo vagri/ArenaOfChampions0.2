@@ -2,7 +2,9 @@ package assets.champions;
 
 import assets.Champion;
 import assets.abilities.Bloodthirster;
+import assets.abilities.GrieviousWounds;
 import assets.abilities.MortalStrike;
+import assets.effects.Bleed;
 import engine.game.Player;
 
 import java.util.List;
@@ -31,6 +33,8 @@ public class Executioner extends Champion {
     }
 
     public static void play(int casterID, List<Player> playerList){
+
+        GrieviousWounds.check(casterID, playerList);//checking if the executioner is bleeding someone
 
 
         System.out.println("Choose ability to cast:");

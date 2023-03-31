@@ -8,23 +8,22 @@ import java.util.List;
 
 public class Shield extends Effect {
 
-    public Shield(int effectID, String name, int playerID,int value, int duration, int abilityID, boolean stackable, boolean isVisible) {
-        super(effectID, name, playerID,value, duration,abilityID, stackable, isVisible);
+    public Shield(int effectID, String name, int casterID, int targetID, int value, int duration, int abilityID, boolean stackable, boolean isVisible) {
+        super(effectID, name, casterID, targetID, value, duration, abilityID, stackable, isVisible);
     }
 
     static int effectID = 3;
     static String name = "Shield";
 
-
     public static void add(int casterID, int targetID, int amount, int duration,int abilityID, boolean stackable, List<Player> playerList, List<Effect> effectList){
         if(!stackable){
             for(int i = 0;i<effectList.size();i++) {
-                if(effectList.get(targetID).getAbilityID() == effectList.get(i).getAbilityID()) {
+                if(effectList.get(i).getAbilityID() == abilityID) {
                     effectList.remove(i);
                 }
             }
         }
-        effectList.add(new Effect(effectID,name,targetID,amount,duration,abilityID,stackable,true));
+        effectList.add(new Effect(effectID,name,casterID,targetID,amount,duration,abilityID,stackable,true));
 
         if(playerList.get(casterID).getID() == playerList.get(targetID).getID()) {
             System.out.println(playerList.get(casterID).getName() + " applied a Shield of " + amount
@@ -42,7 +41,7 @@ public class Shield extends Effect {
 
         do {               // run until the damage is absorbed or the shields are broken
             for (int i = 0; i < effectList.size(); i++) { //find lowest remaining time shield
-                if(effectList.get(i).getPlayerID() == targetID) {
+                if(effectList.get(i).getTargetID() == targetID) {
                     if (effectList.get(i).getEffectID() == 3) {
                         if (minDuration > effectList.get(i).getDuration()) {
                             minDuration = effectList.get(i).getDuration();

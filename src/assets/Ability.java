@@ -39,55 +39,113 @@ public class Ability {
     }
 
     public static int pickTarget(int casterID, List<Player> playerList, boolean targetsEnemies, boolean targetsAllies, boolean targetself) {
-
-        System.out.println("Pick a target:");
-        for(Player player : playerList){
-            System.out.println(player.toString());
+        int team1Size=0;
+        int team2Size=0;
+        for(int i = 0;i<playerList.size();i++){//counting how many players are remaining from each team
+            if(playerList.get(i).getTeamID() == 1){
+                team1Size++;
+            }else{
+                team2Size++;
+            }
         }
-        System.out.println("Press 0 to choose another ability.");
 
-        int targetID,realID;
-        boolean targetfound = false;
+        int targetID = -2;
 
-        do {
-            Scanner reader = new Scanner(System.in);
-            targetID = reader.nextInt();
+        targetID = instantPick(casterID,team1Size, team2Size, playerList, targetsEnemies, targetsAllies ,targetself);
 
-            if(targetID == 0){
-                targetID = -2;
-            }else {
-                for (int i = 0; i < playerList.size(); i++) {
-                    if (playerList.get(i).getID() == targetID) {
-                        targetfound = true;
-                        targetID = i;
-                        System.out.println("targetid is found and is " + targetID);
+        if (targetID == -2){//if the target is not instant, ask the user
+
+            System.out.println("Pick a target:");
+            for(Player player : playerList){
+                System.out.println(player.toString());
+            }
+            System.out.println("Press 0 to choose another ability.");
+
+
+            boolean targetfound = false;
+            int realID;
+            do {
+                Scanner reader = new Scanner(System.in);
+                targetID = reader.nextInt();
+
+                if(targetID == 0){
+                    targetID = -2;
+                }else {
+                    for (int i = 0; i < playerList.size(); i++) {
+                        if (playerList.get(i).getID() == targetID) {
+                            targetfound = true;
+                            targetID = i;
+                            System.out.println("targetid is found and is " + targetID);
+                        }
+                    }
+                    if (!targetfound) {
+                        System.out.println("This player does not exist");
+                        targetID = -1;
+                        System.out.println("Pick another target!");
+                    } else if (playerList.get(casterID).getID() == playerList.get(targetID).getID() && !targetself) {
+                        System.out.println("You cannot target yourself!");
+                        targetID = -1;
+                        System.out.println("Pick another target!");
+                    } else if (playerList.get(casterID).getTeamID() == playerList.get(targetID).getTeamID() && playerList.get(casterID).getID() != playerList.get(targetID).getID() && !targetsAllies) {
+                        System.out.println("You cannot target an ally!");
+                        targetID = -1;
+                        System.out.println("Pick another target!");
+                    } else if (playerList.get(casterID).getTeamID() != playerList.get(targetID).getTeamID() && !targetsEnemies) {
+                        System.out.println("You cannot target an enemy!");
+                        targetID = -1;
+                        System.out.println("Pick another target!");
+                    } else if (playerList.get(targetID).isDead()) {
+                        System.out.println("This target is dead!");
+                        targetID = -1;
+                        System.out.println("Pick another target!");
                     }
                 }
-                if (!targetfound) {
-                    System.out.println("This player does not exist");
-                    targetID = -1;
-                    System.out.println("Pick another target!");
-                } else if (playerList.get(casterID).getID() == playerList.get(targetID).getID() && !targetself) {
-                    System.out.println("You cannot target yourself!");
-                    targetID = -1;
-                    System.out.println("Pick another target!");
-                } else if (playerList.get(casterID).getTeamID() == playerList.get(targetID).getTeamID() && playerList.get(casterID).getID() != playerList.get(targetID).getID() && !targetsAllies) {
-                    System.out.println("You cannot target an ally!");
-                    targetID = -1;
-                    System.out.println("Pick another target!");
-                } else if (playerList.get(casterID).getTeamID() != playerList.get(targetID).getTeamID() && !targetsEnemies) {
-                    System.out.println("You cannot target an enemy!");
-                    targetID = -1;
-                    System.out.println("Pick another target!");
-                } else if (playerList.get(targetID).isDead()) {
-                    System.out.println("This target is dead!");
-                    targetID = -1;
-                    System.out.println("Pick another target!");
-                }
-            }
-        }while(targetID == -1);
+            }while(targetID == -1);
+        }
+
+
 
         return targetID;
+    }
+
+    public static int instantPick(int casterID,int team1size,int team2size, List<Player> playerList, boolean targetsEnemies, boolean targetsAllies, boolean targetself) {
+
+        if(targetsAllies == false && targetsEnemies == false && targetself==true){// check if this its self cast ONLY
+            return casterID;// this may break
+        }else if(playerList.get(casterID).getTeamID()==1){// if not check the team to get the correct measures, this is for team 1 player
+            if((targetsEnemies == true && targetsAllies == false && targetself == false)&&(team2size == 1) ){// if there is only one enemy and you can only target enemies
+                for (int i = 0; i < playerList.size(); i++) {
+                    if (playerList.get(i).getTeamID() == 2) {// find the enemy
+                        return i;
+                    }
+                }
+            }else if((targetsEnemies == false && targetsAllies == true && targetself == true)&&(team1size == 1) ){//if there are no allies and you can target yourself
+                return casterID;
+            }else if((targetsEnemies == false && targetsAllies == true && targetself == false)&&(team1size == 2) ){//if there is one ally and you cannot target yourself
+                for (int i = 0; i < playerList.size(); i++) {
+                    if (playerList.get(i).getTeamID() == 1) {// find the ally
+                        return i;
+                    }
+                }
+            }
+        }else{// now do it again for team 2, with inverted team values
+            if((targetsEnemies == true && targetsAllies == false && targetself == false)&&(team1size == 1) ){// if there is only one enemy and you can only target enemies
+                for (int i = 0; i < playerList.size(); i++) {
+                    if (playerList.get(i).getTeamID() == 1) {// find the enemy
+                        return i;
+                    }
+                }
+            }else if((targetsEnemies == false && targetsAllies == true && targetself == true)&&(team2size == 1) ){//if there are no allies and you can target yourself
+                return casterID;
+            }else if((targetsEnemies == false && targetsAllies == true && targetself == false)&&(team2size == 2) ){//if there is one ally and you cannot target yourself
+                for (int i = 0; i < playerList.size(); i++) {
+                    if (playerList.get(i).getTeamID() == 2) {// find the ally
+                        return i;
+                    }
+                }
+            }
+        }
+        return casterID;
     }
 
     public int getAbilityID() {
