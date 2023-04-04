@@ -86,8 +86,8 @@ public class FireStorm extends Ability {
     public static void checkBurn(int casterID,  List<Player> playerList){
         for(int i = 0;i<effectList.size();i++) {
             if(effectList.get(i).getCasterID() == casterID){
-                if(effectList.get(i).getEffectID() == 0){
-                    Burn.damage(casterID, effectList.get(i).getTargetID(), value, playerList);
+                if(effectList.get(i).getEffectID() == 1){
+                    Burn.damage(casterID, effectList.get(i).getTargetID(), value2, playerList);
                 }
             }
         }
