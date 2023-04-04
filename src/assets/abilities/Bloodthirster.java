@@ -2,6 +2,7 @@ package assets.abilities;
 
 import assets.Ability;
 import assets.actions.DealDamage;
+import assets.actions.DrainResource;
 import assets.actions.HealHealth;
 import assets.actions.RestoreResource;
 import engine.game.Player;
@@ -14,14 +15,15 @@ public class Bloodthirster extends Ability{
     }
 
     static int abilityID = 1;
-    static String name = "2) Bloodthrister: ";
-    static String info = "Deal 40 damage to an enemy and heal 40 health. Costs 25 rage.";
-    static int value = 40;
 
-    static int cost = 25;
+    static int value = 35;
+
+    static int cost = 15;
     static boolean targetsEnemies = true;
     static boolean targetsAllies = false;
     static boolean targetSelf = false;
+    static String name = "2) Bloodthrister: ";
+    static String info = "Deal " + value + " damage to an enemy and heal " + value + " health. Costs " + cost + " rage.";
 
     static boolean available = true;
     static boolean finished = false;
@@ -48,7 +50,11 @@ public class Bloodthirster extends Ability{
         }else{
             DealDamage.call(casterID, targetID, value, playerList);
             HealHealth.call(casterID, casterID, value, playerList);
+            DrainResource.call(casterID, casterID, cost, playerList);
             finished = true;
+        }
+        if(!playerList.get(targetID).isDead()){
+            GrieviousWounds.cast(casterID, targetID, playerList);
         }
 
         return finished;

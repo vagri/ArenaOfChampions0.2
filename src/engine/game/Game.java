@@ -3,9 +3,13 @@ package engine.game;
 import assets.Ability;
 import assets.Champion;
 import assets.Effect;
+import assets.abilities.FireStorm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static assets.Effect.effectList;
 
 public class Game extends Player{
 
@@ -55,14 +59,24 @@ public class Game extends Player{
             System.out.println(player.toString());
         }
 
+
         casterid--;
+
+        String state = checkPlayerState(casterid);
+
         System.out.println("________________[ Effects ]____________________");
         Effect.update(casterid);
         lowerCD(casterid);
 
-        System.out.println("-----------------( It is " + playerList.get(casterid).getName() + "'s turn. )-----------------");
+        if(playerList.get(casterid).isDead()){
 
-        Ability.choose(casterid, playerList);
+        }else if(state == "Stunned"){
+            System.out.println("---( " + playerList.get(casterid).getName() + " lose their turn, since they are Stunned. )----");
+        }else{
+            System.out.println("-----------------( It is " + playerList.get(casterid).getName() + "'s turn. )-----------------");
+
+            Ability.choose(casterid, state, playerList);
+        }
     }
 
     public static void lowerCD(int id){
@@ -74,5 +88,16 @@ public class Game extends Player{
             }
         }
         playerList.get(id).setCDRemaining(CDarray);
+    }
+
+    public static String checkPlayerState(int ID){
+        for(int i = 0;i<effectList.size();i++) {                    // search the effects
+            if(effectList.get(i).getTargetID() == ID){              // find the effects affecting the player
+                if(effectList.get(i).getEffectID() == 5){           // if the player is casting
+                    return "Casting";                               // return casting
+                }
+            }
+        }
+        return "Normal";                                            // return normal if the player can move on.
     }
 }

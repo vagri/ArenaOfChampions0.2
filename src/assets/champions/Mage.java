@@ -1,8 +1,7 @@
 package assets.champions;
 
 import assets.Champion;
-import assets.abilities.ManaShield;
-import assets.abilities.MortalStrike;
+import assets.abilities.*;
 import engine.game.Player;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class Mage extends Champion {
     static int resourceID = 0;
     static int type = 0;
 
-    static boolean[] availability = {true,true,true,true};
+    static boolean[] availability = {false,true,true,true,true};
     static boolean finished;
 
 
@@ -30,13 +29,21 @@ public class Mage extends Champion {
         championList.add(new Champion(championID,name,abilities,maxHP,maxR,resourceID,type));
     }
 
-    public static void play(int attackerID, List<Player> playerList){
+    public static void play(int casterID,String state, List<Player> playerList){
+        FireStorm.checkBurn(casterID, playerList);
+        if(state == "Casting"){
+            FireStorm.finishCast(casterID, playerList);
+        }
+
+
         System.out.println("Choose ability to cast:");
         finished = false;
         do{
 
-            availability[3] = ManaShield.checkAvailability(attackerID,playerList);
-
+            availability[1] = ArcaneShot.checkAvailability(casterID,playerList);
+            availability[2] = MagicShard.checkAvailability(casterID,playerList);
+            availability[3] = ManaShield.checkAvailability(casterID,playerList);
+            availability[4] = FireStorm.checkAvailability(casterID,playerList);
             System.out.println("5) Do Nothing");
 
             Scanner reader = new Scanner(System.in);
@@ -44,21 +51,32 @@ public class Mage extends Champion {
 
             switch(choise){
                 case 1:
-
+                    if(availability[1]){
+                        finished = ArcaneShot.cast(casterID,playerList);
+                    }else{
+                        System.out.println("This ability cannot be cast!");
+                    }
                     break;
                 case 2:
-
-
+                    if(availability[2]){
+                        finished = MagicShard.cast(casterID,playerList);
+                    }else{
+                        System.out.println("This ability cannot be cast!");
+                    }
                     break;
                 case 3:
                     if(availability[3]){
-                        finished = ManaShield.cast(attackerID,playerList);
+                        finished = ManaShield.cast(casterID,playerList);
                     }else{
                         System.out.println("This ability cannot be cast!");
                     }
                     break;
                 case 4:
-
+                    if(availability[4]){
+                        finished = FireStorm.cast(casterID,playerList);
+                    }else{
+                        System.out.println("This ability cannot be cast!");
+                    }
                     break;
                 case 5:
                     System.out.println("You do not do anything.");

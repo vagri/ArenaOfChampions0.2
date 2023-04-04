@@ -18,8 +18,10 @@ public class Shield extends Effect {
     public static void add(int casterID, int targetID, int amount, int duration,int abilityID, boolean stackable, List<Player> playerList, List<Effect> effectList){
         if(!stackable){
             for(int i = 0;i<effectList.size();i++) {
-                if(effectList.get(i).getAbilityID() == abilityID) {
-                    effectList.remove(i);
+                if(effectList.get(i).getCasterID() == casterID){
+                    if(effectList.get(i).getEffectID() == effectID) {
+                        effectList.remove(i);
+                    }
                 }
             }
         }

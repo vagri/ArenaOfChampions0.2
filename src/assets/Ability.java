@@ -26,14 +26,14 @@ public class Ability {
         this.isPassive = isPassive;
     }
 
-    public static void choose(int casterID,List<Player> playerList){
+    public static void choose(int casterID, String state, List<Player> playerList){
         int championID = playerList.get(casterID).getChampionID();
         switch (championID){
             case 0:
                 Executioner.play(casterID,playerList);
                 break;
             case 1:
-                Mage.play(casterID,playerList);
+                Mage.play(casterID,state,playerList);
                 break;
         }
     }
@@ -75,7 +75,6 @@ public class Ability {
                         if (playerList.get(i).getID() == targetID) {
                             targetfound = true;
                             targetID = i;
-                            System.out.println("targetid is found and is " + targetID);
                         }
                     }
                     if (!targetfound) {

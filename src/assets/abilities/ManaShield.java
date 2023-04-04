@@ -15,13 +15,13 @@ public class ManaShield extends Ability{
         super(abilityID, name, value, cost, CD, isCastable, isPassive);
     }
 
-    static int abilityID = 6;
-    static String name = "3) Mana Shield: ";
-    static String info = "Shield yourself for 40 damage for the next 2 rounds. Enemies attacking the mage will take damage equal to the amount of shield broken. Costs 40 Mana.";
+    static int abilityID = 8;
     static int value = 40;
     static int cost = 40;
     static boolean stackable = false;
     static int duration = 2;
+    static String name = "3) Mana Shield: ";
+    static String info = "Shield yourself for " + value + " damage for the next " + duration +" rounds. Enemies attacking the mage will take damage equal to the amount of shield broken. Costs 40 Mana.";
     static boolean targetsEnemies = false;
     static boolean targetsAllies = false;
     static boolean targetSelf = true;

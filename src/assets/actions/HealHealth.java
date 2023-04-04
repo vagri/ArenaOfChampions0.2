@@ -1,9 +1,12 @@
 package assets.actions;
 
 import assets.Action;
+import assets.effects.Injured;
 import engine.game.Player;
 
 import java.util.List;
+
+import static assets.Effect.effectList;
 
 public class HealHealth extends Action{
     public HealHealth(int effectID, String name) {
@@ -25,5 +28,7 @@ public class HealHealth extends Action{
             System.out.println(playerList.get(casterID).getName() + " healed " + playerList.get(targetID).getName() + " for " +
                     value + " Health.");
         }
+
+        Injured.update(targetID, targetID, playerList.get(targetID).getCurrentHP(), -1, -1, false, playerList, effectList);
     }
 }

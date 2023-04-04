@@ -66,6 +66,13 @@ public class Player extends PlayerStats{
         isDead = false;
     }
 
+    public static void isPlayerDead(int playerID){
+        if(playerList.get(playerID).getCurrentHP() <= 0){
+            playerList.get(playerID).setDead(true);
+            System.out.println(playerList.get(playerID).getName() + " has been slain!");
+        }
+    }
+
     public static int isTeamDead() {
         int team = 0;   // 0 for no dead team, 3 for a tie, other for teamID
         int deadPlayersTeam1 = 0;

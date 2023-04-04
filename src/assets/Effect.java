@@ -41,32 +41,31 @@ public class Effect {
         int activeEffects = 0;
 
         for(int i = 0 ; i < effectList.size();i++){
-            if(effectList.get(i).getTargetID() == casterID) {
-                activeEffects++;
-                effectList.get(i).setDuration(effectList.get(i).getDuration() - 1);
-                if (effectList.get(i).getDuration() < 0) {
-                    effectList.remove(i);
-                    activeEffects--;
+            activeEffects++;                                                        //count all the effects found
+            if(effectList.get(i).getCasterID() == casterID) {                       //look for effects that the caster made
+                effectList.get(i).setDuration(effectList.get(i).getDuration() - 1); //lower their duration
+                if (effectList.get(i).getDuration() == 0) {                         //if an effect reaches 0
+                    if(effectList.get(i).getEffectID() == 5){
+                                                                                    //if the effect is casting, we dont remove it here.
+                    }else{
+                        effectList.remove(i);                                       //remove the effect
+                        activeEffects--;                                            //and lower the counter
+                    }
                 }
-
             }
-
         }
-        if(activeEffects > 0){
+        if(activeEffects > 0){                                                      //if we have more than 0 effects, show them
             for (Effect effect : effectList) {
                 System.out.println(effect.toString());
             }
         }else{
-            System.out.println("None.");
+            System.out.println("None.");                                            //if no effect are found, print none.
         }
-
 
         return effectList;
     }
 
     public static int checkPlayerEffects(int casterID, int targetID, int value, int actionID){
-
-
 
         if(actionID == 0) {
             for (int i = 0; i < effectList.size(); i++) {

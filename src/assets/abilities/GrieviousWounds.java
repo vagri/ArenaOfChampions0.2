@@ -15,13 +15,12 @@ public class GrieviousWounds extends Ability{
     }
 
     static int abilityID = 0;
-    static String name = "Passive: Grievious Wounds";
-    static String info = "Targets struck by the Executioner have a 25% chance to bleed 20 damage for the next 2 rounds.";
-    static int value = 20;
-    static int chance = 75;
 
-    static int cost = 0;
+    static int value = 20;
+    static int chance = 25;
     static int duration = 2;
+    static String name = "Passive: Grievious Wounds: ";
+    static String info = " Targets struck by the Executioner have a " + chance + "% chance to bleed " + value +" damage for the next " + duration + " rounds.";
     static boolean stackable = false;
     static boolean targetsEnemies = true;
     static boolean targetsAllies = false;
@@ -38,8 +37,12 @@ public class GrieviousWounds extends Ability{
         }
     }
 
-    public static void check(int casterID, List<Player> playerList){
+    public static void printinfo(){
+        System.out.print(name);
+        System.out.println(info);
+    }
 
+    public static void check(int casterID, List<Player> playerList){
 
         for(int i = 0;i<effectList.size();i++) {
             if(effectList.get(i).getCasterID() == casterID){

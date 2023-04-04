@@ -14,11 +14,13 @@ public class MortalStrike extends Ability {
     }
 
     static int abilityID = 1;
-    static String name = "1) Mortal Strike: ";
-    static String info = "Deal 50 damage to an enemy. Generates 20 rage.";
-    static int value = 50;
+
+
+    static int value = 40;
+
     static int value2 = 20;
-    static int cost = 0;
+    static String name = "1) Mortal Strike: ";
+    static String info = "Deal " + value + " damage to an enemy. Generates " + value2 + " rage.";
     static boolean targetsEnemies = true;
     static boolean targetsAllies = false;
     static boolean targetSelf = false;

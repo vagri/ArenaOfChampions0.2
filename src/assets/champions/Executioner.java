@@ -1,12 +1,10 @@
 package assets.champions;
 
 import assets.Champion;
-import assets.abilities.Bloodthirster;
-import assets.abilities.GrieviousWounds;
-import assets.abilities.MortalStrike;
-import assets.effects.Bleed;
+import assets.abilities.*;
 import engine.game.Player;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +23,7 @@ public class Executioner extends Champion {
     static int resourceID = 1;
     static int type = 0;
 
-    static boolean[] availability = {true,true,true,true};
+    static boolean[] availability = {false,true,true,true,true};
     static boolean finished = false;
 
     public static void load(){
@@ -36,12 +34,13 @@ public class Executioner extends Champion {
 
         GrieviousWounds.check(casterID, playerList);//checking if the executioner is bleeding someone
 
-
         System.out.println("Choose ability to cast:");
         do{
+            GrieviousWounds.printinfo();
             availability[1] = MortalStrike.checkAvailability(casterID,playerList);
             availability[2] = Bloodthirster.checkAvailability(casterID,playerList);
-
+            availability[3] = CripplingAttack.checkAvailability(casterID,playerList);
+            availability[4] = Execution.checkAvailability(casterID,playerList);
             System.out.println("5) Do Nothing");
 
             Scanner reader = new Scanner(System.in);
@@ -63,10 +62,18 @@ public class Executioner extends Champion {
                     }
                     break;
                 case 3:
-
+                    if(availability[3]){
+                        finished = CripplingAttack.cast(casterID,playerList);
+                    }else{
+                        System.out.println("This ability cannot be cast!");
+                    }
                     break;
                 case 4:
-
+                    if(availability[4]){
+                        finished = CripplingAttack.cast(casterID,playerList);
+                    }else{
+                        System.out.println("This ability cannot be cast!");
+                    }
                     break;
                 case 5:
                     System.out.println("You do not do anything.");
