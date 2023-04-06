@@ -6,8 +6,8 @@ import engine.game.Player;
 import java.util.List;
 
 public class DrainResource extends Action {
-    public DrainResource(int effectID, String name) {
-        super(effectID, name);
+    public DrainResource(int actionID, String name) {
+        super(actionID, name);
     }
 
     static int actionID = 2;
@@ -19,9 +19,7 @@ public class DrainResource extends Action {
             playerList.get(targetID).setCurrentR(0);
         }
 
-        if(casterID == -1){// if it is naturally gained mana
-
-        }else if(casterID == targetID){
+        if(casterID == targetID){
             System.out.println(playerList.get(casterID).getName() + " lost " + value + " " + playerList.get(targetID).getResource());
         }else{
             System.out.println(playerList.get(casterID).getName() + " drained from " + playerList.get(targetID).getName() +", " + value +

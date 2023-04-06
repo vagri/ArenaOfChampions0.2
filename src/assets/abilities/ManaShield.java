@@ -16,12 +16,14 @@ public class ManaShield extends Ability{
     }
 
     static int abilityID = 8;
-    static int value = 40;
-    static int cost = 40;
+    static int value1 = 40;
+    static int value2 = 60;
     static boolean stackable = false;
     static int duration = 2;
     static String name = "3) Mana Shield: ";
-    static String info = "Shield yourself for " + value + " damage for the next " + duration +" rounds. Enemies attacking the mage will take damage equal to the amount of shield broken. Costs 40 Mana.";
+    static String info = "Use " + value1+ " mana, to shield yourself for that damage for the next " + duration +" rounds. Enemies attacking the mage will take damage equal to the amount of shield broken.";
+    static String name2 = "3) Mana Barrier: ";
+    static String info2 = "Use " + value2+ " mana, to shield yourself for that damage for the next " + duration +" rounds. Enemies attacking the mage will take damage equal to the amount of shield broken.";
     static boolean targetsEnemies = false;
     static boolean targetsAllies = false;
     static boolean targetSelf = true;
@@ -30,8 +32,25 @@ public class ManaShield extends Ability{
     static boolean finished = false;
 
     public static boolean checkAvailability(int playerID, List<Player> playerList){
+        for (int i = 0; i < effectList.size(); i++) {
+            if (effectList.get(i).getCasterID() == playerID) {
+                if (effectList.get(i).getEffectID() == 6) {
+                    if (effectList.get(i).getValue() == 3) {
+                        if(playerList.get(playerID).getCurrentR() >= value2){
+                            System.out.println(info2);
+                            available = true;
+                        }else{
+                            System.out.println("Not enough mana.");
+                            available = false;
+                        }
+                        return available;
+                    }
+                }
+            }
+        }
+
         System.out.print(name);
-        if(playerList.get(playerID).getCurrentR() >= cost){
+        if(playerList.get(playerID).getCurrentR() >= value1){
             System.out.println(info);
             available = true;
         }else{
@@ -39,18 +58,27 @@ public class ManaShield extends Ability{
             available = false;
         }
 
-
         return available;
     }
 
     public static boolean cast(int casterID, List<Player> playerList){
         int targetID = Ability.pickTarget(casterID, playerList, targetsEnemies,targetsAllies,targetSelf);
 
+        for (int i = 0; i < effectList.size(); i++) {
+            if (effectList.get(i).getCasterID() == casterID) {
+                if (effectList.get(i).getEffectID() == 6) {
+                    if (effectList.get(i).getValue() == 3) {
+
+                    }
+                }
+            }
+        }
+
         if(targetID == -2) {
             finished = false;
         }else{
-            ThornShield.add(casterID, targetID, value, duration,abilityID, stackable, playerList, effectList);
-            DrainResource.call(casterID, casterID, cost, playerList);
+            ThornShield.add(casterID, targetID, value1, duration,abilityID, stackable, playerList, effectList);
+            DrainResource.call(casterID, casterID, value1, playerList);
             finished = true;
         }
 

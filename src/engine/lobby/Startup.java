@@ -24,10 +24,12 @@ public class Startup {
         System.out.println("Player 1 choose name:");
         Scanner reader = new Scanner(System.in);
         name1 = reader.nextLine();
+        name1 = name1.substring(0, 1).toUpperCase() + name1.substring(1);
 
         System.out.println("Player 2 choose name:");
         reader = new Scanner(System.in);
         name2 = reader.nextLine();
+        name2 = name2.substring(0, 1).toUpperCase() + name2.substring(1);
 
     }
 

@@ -7,8 +7,8 @@ import engine.game.Player;
 import java.util.List;
 
 public class RestoreResource extends Action {
-    public RestoreResource(int effectID, String name) {
-        super(effectID, name);
+    public RestoreResource(int actionID, String name) {
+        super(actionID, name);
     }
 
     static int actionID = 1;

@@ -1,22 +1,22 @@
 package assets;
 
 public class Action {
-    private int effectID;
+    private int ActionID;
     private String name;
 
 
-    public Action(int effectID, String name) {
-        this.effectID = effectID;
+    public Action(int actionID, String name) {
+        this.ActionID = actionID;
         this.name = name;
 
     }
 
-    public int getEffectID() {
-        return effectID;
+    public int getActionID() {
+        return ActionID;
     }
 
-    public void setEffectID(int effectID) {
-        this.effectID = effectID;
+    public void setActionID(int actionID) {
+        this.ActionID = actionID;
     }
 
     public String getName() {

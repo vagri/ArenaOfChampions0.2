@@ -11,8 +11,8 @@ import static assets.Effect.effectList;
 
 public class DealDamage extends Action {
 
-    public DealDamage(int effectID, String name) {
-        super(effectID, name);
+    public DealDamage(int actionID, String name) {
+        super(actionID, name);
     }
 
     static int actionID = 0;
@@ -26,5 +26,10 @@ public class DealDamage extends Action {
 
         Injured.update(targetID, targetID, playerList.get(targetID).getCurrentHP(), -1, -1, false, playerList, effectList);
         Player.isPlayerDead(targetID);
+
+        if((!playerList.get(targetID).isDead()) && playerList.get(targetID).getResource() == "Rage"){// if the target uses rage
+            double rageGained = ((double) value / playerList.get(targetID).getMaxHP()) * 100.0;//get percent max health lost
+            RestoreResource.call(targetID, targetID, (int)rageGained, playerList);               // and add it to their rage bar
+        }
     }
 }

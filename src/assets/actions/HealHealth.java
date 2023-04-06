@@ -9,8 +9,8 @@ import java.util.List;
 import static assets.Effect.effectList;
 
 public class HealHealth extends Action{
-    public HealHealth(int effectID, String name) {
-        super(effectID, name);
+    public HealHealth(int actionID, String name) {
+        super(actionID, name);
     }
 
     static int actionID = 3;

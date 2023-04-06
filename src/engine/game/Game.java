@@ -4,6 +4,7 @@ import assets.Ability;
 import assets.Champion;
 import assets.Effect;
 import assets.abilities.FireStorm;
+import assets.actions.RestoreResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,26 +66,47 @@ public class Game extends Player{
         String state = checkPlayerState(casterid);
 
         System.out.println("________________[ Effects ]____________________");
-        Effect.update(casterid);
-        lowerCD(casterid);
+        Effect.update(casterid);    //lower the effects by 1 round
+        lowerCD(casterid);          //lower the cooldown as well
 
-        if(playerList.get(casterid).isDead()){
+        if(playerList.get(casterid).isDead()){//if the caster is dead skip turn
 
-        }else if(state == "Stunned"){
-            System.out.println("---( " + playerList.get(casterid).getName() + " lose their turn, since they are Stunned. )----");
         }else{
             System.out.println("-----------------( It is " + playerList.get(casterid).getName() + "'s turn. )-----------------");
+            if(playerList.get(casterid).getResource() == "Mana"){   //if they have mana, restore some mana
+                RestoreResource.call(casterid, casterid , 25, playerList);
+            }
 
-            Ability.choose(casterid, state, playerList);
+            if(state == "Stunned"){         // if they are stunned, skip turn
+                System.out.println("You lose your turn, since you are stunned.");
+            }else{                          // if they are okay, play normally
+                Ability.choose(casterid, state, playerList);
+            }
         }
     }
 
     public static void lowerCD(int id){
         int[] CDarray = new int[5];
+
+        /*CDarray = playerList.get(0).getCDRemaining();
+        System.out.println("CDs of " + playerList.get(0).getName());
+        for(int i = 0;i<=4;i++){
+                System.out.println(CDarray[i]);
+        }
+
+        CDarray = playerList.get(1).getCDRemaining();
+        System.out.println("CDs of " + playerList.get(1).getName());
+        for(int i = 0;i<=4;i++){
+            System.out.println(CDarray[i]);
+        }
+
+        System.out.println("Normal procedure.");*/
+
+
         CDarray = playerList.get(id).getCDRemaining();
         for(int i = 0;i<=4;i++){
             if(CDarray[i] > 0) {
-                CDarray[i] = CDarray[i]--;
+                CDarray[i]--;
             }
         }
         playerList.get(id).setCDRemaining(CDarray);

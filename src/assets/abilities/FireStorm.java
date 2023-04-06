@@ -1,6 +1,7 @@
 package assets.abilities;
 
 import assets.Ability;
+import assets.actions.AddCooldown;
 import assets.actions.DealDamage;
 import assets.actions.DrainResource;
 import assets.effects.Bleed;
@@ -18,16 +19,21 @@ public class FireStorm extends Ability {
         super(abilityID, name, value, cost, CD, isCastable, isPassive);
     }
     static int abilityID = 9;
-
     static int value = 120;
     static int value2 = 30;
     static int cost = 140;
+    static int cost2 = 150;
     static boolean stackable = true;
     static int duration = 1;
     static int duration2 = 1;
-    static String name = "4) Fire Storm: ";
-    static String info = "Start casting for the next round. If not interrupted, deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round.";
-    static String info2 = "Costs " + cost +" mana. If interrupted, gain back the mana.";
+    static int cooldown = 5;
+    static String name1 = "4) Fire Storm: ";
+    static String infoa1 = "Start casting for the next round. If not interrupted, deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round.";
+    static String infob1 = "Costs " + cost +" mana. On a " + cooldown + " round cooldown. If interrupted, gain back the mana. ";
+    static String name2= "4) Hell Fire: ";
+    static String infoa2 = "Instantly deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round.Costs " + cost2 +" mana.";
+    static String infoB2 = "On a " + cooldown + " round cooldown. If one spell is mastered, this spell is mastered too. ";
+
     static boolean targetsEnemies = true;
     static boolean targetsAllies = false;
     static boolean targetSelf = false;
@@ -36,10 +42,20 @@ public class FireStorm extends Ability {
     static boolean finished = false;
 
     public static boolean checkAvailability(int playerID, List<Player> playerList){
-        System.out.print(name);
-        if(playerList.get(playerID).getCurrentR() >= cost){
-            System.out.println(info);
-            System.out.println(info2);
+        int[] abilityCDs = playerList.get(playerID).getCDRemaining();
+        int actualCost = cost;
+
+
+        System.out.print(name1);
+
+
+
+        if(abilityCDs[4] > 0){
+            System.out.println("On a " + abilityCDs[4] + " round cooldown.");
+            available = false;
+        }else if(playerList.get(playerID).getCurrentR() >= actualCost){
+            System.out.println(infoa1);
+            System.out.println(infob1);
             available = true;
         }else{
             System.out.println("Not enough mana.");
@@ -51,16 +67,14 @@ public class FireStorm extends Ability {
     }
 
     public static boolean cast(int casterID, List<Player> playerList){
-        int targetID = Ability.pickTarget(casterID, playerList, targetsEnemies,targetsAllies,targetSelf);
 
-        if(targetID == -2) {
-            finished = false;
-        }else{
+
             Casting.add(casterID, duration, abilityID, playerList, effectList);
             DrainResource.call(casterID, casterID, cost, playerList);
+            AddCooldown.call(casterID, cooldown, 4,   playerList);
             System.out.println("You begin casting Fire Storm!");
             finished = true;
-        }
+
 
         return finished;
     }
