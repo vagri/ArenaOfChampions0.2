@@ -68,12 +68,19 @@ public class ManaShield extends Ability{
             if (effectList.get(i).getCasterID() == casterID) {
                 if (effectList.get(i).getEffectID() == 6) {
                     if (effectList.get(i).getValue() == 3) {
+                        if(targetID == -2) {
+                            finished = false;
+                        }else{
+                            ThornShield.add(casterID, targetID, value2, duration,abilityID, stackable, playerList, effectList);
+                            DrainResource.call(casterID, casterID, value2, playerList);
+                            finished = true;
+                        }
 
+                        return finished;
                     }
                 }
             }
         }
-
         if(targetID == -2) {
             finished = false;
         }else{
@@ -81,7 +88,6 @@ public class ManaShield extends Ability{
             DrainResource.call(casterID, casterID, value1, playerList);
             finished = true;
         }
-
         return finished;
     }
 }

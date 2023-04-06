@@ -32,7 +32,7 @@ public class FireStorm extends Ability {
     static String infob1 = "Costs " + cost +" mana. On a " + cooldown + " round cooldown. If interrupted, gain back the mana. ";
     static String name2= "4) Hell Fire: ";
     static String infoa2 = "Instantly deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round.Costs " + cost2 +" mana.";
-    static String infoB2 = "On a " + cooldown + " round cooldown. If one spell is mastered, this spell is mastered too. ";
+    static String infob2 = "On a " + cooldown + " round cooldown. If one spell is mastered, this spell is mastered too. ";
 
     static boolean targetsEnemies = true;
     static boolean targetsAllies = false;
@@ -45,10 +45,30 @@ public class FireStorm extends Ability {
         int[] abilityCDs = playerList.get(playerID).getCDRemaining();
         int actualCost = cost;
 
+        for (int i = 0; i < effectList.size(); i++) {
+            if (effectList.get(i).getCasterID() == playerID) {
+                if (effectList.get(i).getEffectID() == 6) {
+                    if (effectList.get(i).getValue() == 3) {
+                        System.out.print(name2);
 
+                        if(abilityCDs[4] > 0){
+                            System.out.println("On a " + abilityCDs[4] + " round cooldown.");
+                            available = false;
+                        }else if(playerList.get(playerID).getCurrentR() >= actualCost){
+                            System.out.println(infoa2);
+                            System.out.println(infob2);
+                            available = true;
+                        }else{
+                            System.out.println("Not enough mana.");
+                            available = false;
+                        }
+
+                        return available;
+                    }
+                }
+            }
+        }
         System.out.print(name1);
-
-
 
         if(abilityCDs[4] > 0){
             System.out.println("On a " + abilityCDs[4] + " round cooldown.");
@@ -62,18 +82,34 @@ public class FireStorm extends Ability {
             available = false;
         }
 
-
         return available;
     }
 
     public static boolean cast(int casterID, List<Player> playerList){
 
+        for (int i = 0; i < effectList.size(); i++) {
+            if (effectList.get(i).getCasterID() == casterID) {
+                if (effectList.get(i).getEffectID() == 6) {
+                    if (effectList.get(i).getValue() == 3) {
+                        System.out.println("You call upon Hell Fire on the Arena!");
 
-            Casting.add(casterID, duration, abilityID, playerList, effectList);
-            DrainResource.call(casterID, casterID, cost, playerList);
-            AddCooldown.call(casterID, cooldown, 4,   playerList);
-            System.out.println("You begin casting Fire Storm!");
-            finished = true;
+                        damage(casterID, playerList);
+
+                        Burn.add(casterID, casterID, value2, duration2,abilityID, stackable, playerList, effectList);
+                        DrainResource.call(casterID, casterID, cost, playerList);
+                        AddCooldown.call(casterID, cooldown, 4,   playerList);
+                        
+                        finished = true;
+                    }
+                }
+            }
+        }
+
+        Casting.add(casterID, duration, abilityID, playerList, effectList);
+        DrainResource.call(casterID, casterID, cost, playerList);
+        AddCooldown.call(casterID, cooldown, 4,   playerList);
+        System.out.println("You begin casting Fire Storm!");
+        finished = true;
 
 
         return finished;
@@ -89,6 +125,10 @@ public class FireStorm extends Ability {
             }
         }
         System.out.println("You have finished casting the Fire Storm!");
+        damage(casterID, playerList);
+    }
+
+    public static void damage(int casterID, List<Player> playerList){
         for(int i = 0; i < playerList.size();i++){
             if(playerList.get(i).getTeamID() != playerList.get(casterID).getTeamID()){
                 DealDamage.call(casterID, i, value, playerList);
