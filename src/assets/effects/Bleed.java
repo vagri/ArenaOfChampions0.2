@@ -21,7 +21,7 @@ public class Bleed extends Effect {
             for(int i = 0;i<effectList.size();i++) {
                 if(effectList.get(i).getCasterID() == casterID){
                     if(effectList.get(i).getEffectID() == effectID) {
-                        effectList.remove(i);   //remove it, so that we add it again to reset duration
+                         effectList.remove(i);   //remove it, so that we add it again to reset duration
                     }
                 }
             }

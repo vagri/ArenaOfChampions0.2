@@ -19,10 +19,8 @@ public class Executioner extends Champion {
     static int[] abilities = {0,1,2,3,4};
     static int maxHP = 360;
     static int maxR = 100;
-
     static int resourceID = 1;
     static int type = 0;
-
     static boolean[] availability = {false,true,true,true,true};
     static boolean finished = false;
 
@@ -70,7 +68,7 @@ public class Executioner extends Champion {
                     break;
                 case 4:
                     if(availability[4]){
-                        finished = CripplingAttack.cast(casterID,playerList);
+                        finished = Execution.cast(casterID,playerList);
                     }else{
                         System.out.println("This ability cannot be cast!");
                     }

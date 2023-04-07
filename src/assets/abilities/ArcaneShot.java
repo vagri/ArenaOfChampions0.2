@@ -17,9 +17,9 @@ public class ArcaneShot extends Ability {
     }
     static int abilityID = 6;
     static int value = 70;
-    static int cost = 70;
-    static int value2 = 85;
-    static int cost2 = 75;
+    static int cost = 60;
+    static int value2 = 80;
+    static int cost2 = 70;
     static String name = "1) Arcane Shot: ";
     static String name2 = "1) Arcane Blast: ";
     static String info = "Deal " + value + " damage to an enemy. Costs " + cost + " Mana.";

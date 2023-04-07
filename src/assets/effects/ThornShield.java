@@ -55,8 +55,7 @@ public class ThornShield extends Effect {
             }
             if(!foundShields) {
                 return value;
-            }
-            if(effectList.get(minPosition).getValue() > value){
+            }else  if(effectList.get(minPosition).getValue() > value){
                 System.out.println("A Thornshield has been activated by " + playerList.get(casterID).getName() +
                         " while attacking " + playerList.get(targetID).getName());
 

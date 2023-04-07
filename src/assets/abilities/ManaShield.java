@@ -17,8 +17,8 @@ public class ManaShield extends Ability{
     }
 
     static int abilityID = 8;
-    static int value1 = 40;
-    static int value2 = 60;
+    static int value1 = 30;
+    static int value2 = 50;
     static boolean stackable = false;
     static int duration = 2;
     static String name = "3) Mana Shield: ";
