@@ -28,7 +28,6 @@ public class Burn extends Effect {
 
         System.out.println(playerList.get(targetID).getName() + " just started burning from " + playerList.get(casterID).getName()
                 + "'s attacks for "+ amount + " damage, for the next " + duration + " rounds");
-
     }
 
     public static void damage(int casterID, int targetID, int value, List<Player> playerList){

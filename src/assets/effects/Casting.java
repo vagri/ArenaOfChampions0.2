@@ -12,7 +12,7 @@ public class Casting extends Effect {
         super(effectID, name, casterID, targetID, value, duration, abilityID, stackable, isVisible);
     }
     static int effectID = 5;
-    static String name = "Casting";
+    static String name = "Casting a spell";
 
 
     public static void add(int casterID, int duration, int abilityID, List<Player> playerList, List<Effect> effectList) {

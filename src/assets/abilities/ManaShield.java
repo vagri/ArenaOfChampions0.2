@@ -2,6 +2,7 @@ package assets.abilities;
 
 import assets.Ability;
 import assets.actions.DrainResource;
+import assets.effects.MageManaBarrier;
 import assets.effects.Shield;
 import assets.effects.ThornShield;
 import engine.game.Player;
@@ -34,8 +35,9 @@ public class ManaShield extends Ability{
     public static boolean checkAvailability(int playerID, List<Player> playerList){
         for (int i = 0; i < effectList.size(); i++) {
             if (effectList.get(i).getCasterID() == playerID) {
-                if (effectList.get(i).getEffectID() == 6) {
+                if (effectList.get(i).getEffectID() == 8) {
                     if (effectList.get(i).getValue() == 3) {
+                        System.out.print(name2);
                         if(playerList.get(playerID).getCurrentR() >= value2){
                             System.out.println(info2);
                             available = true;
@@ -66,7 +68,7 @@ public class ManaShield extends Ability{
 
         for (int i = 0; i < effectList.size(); i++) {
             if (effectList.get(i).getCasterID() == casterID) {
-                if (effectList.get(i).getEffectID() == 6) {
+                if (effectList.get(i).getEffectID() == 8) {
                     if (effectList.get(i).getValue() == 3) {
                         if(targetID == -2) {
                             finished = false;
@@ -86,6 +88,7 @@ public class ManaShield extends Ability{
         }else{
             ThornShield.add(casterID, targetID, value1, duration,abilityID, stackable, playerList, effectList);
             DrainResource.call(casterID, casterID, value1, playerList);
+            MageManaBarrier.add(casterID, abilityID, playerList, effectList);
             finished = true;
         }
         return finished;

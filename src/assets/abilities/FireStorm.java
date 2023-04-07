@@ -26,13 +26,13 @@ public class FireStorm extends Ability {
     static boolean stackable = true;
     static int duration = 1;
     static int duration2 = 1;
-    static int cooldown = 5;
+    static int cooldown = 10;       //due to a bug, cooldown is calculated in turns not rounds, it should be 5 rounds normally
     static String name1 = "4) Fire Storm: ";
-    static String infoa1 = "Start casting for the next round. If not interrupted, deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round.";
-    static String infob1 = "Costs " + cost +" mana. On a " + cooldown + " round cooldown. If interrupted, gain back the mana. ";
+    static String infoa1 = "Start casting for the next round. If not interrupted, deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round. Costs " + cost +" mana.";
+    static String infob1 = "On a " + cooldown + " round cooldown. If interrupted, gain back the mana. If one spell is mastered, this spell is mastered too.  ";
     static String name2= "4) Hell Fire: ";
-    static String infoa2 = "Instantly deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round.Costs " + cost2 +" mana.";
-    static String infob2 = "On a " + cooldown + " round cooldown. If one spell is mastered, this spell is mastered too. ";
+    static String infoa2 = "Instantly deal " + value +" damage to all enemies and burn them for " + value2 +" damage next round. Burn yourself in the process.";
+    static String infob2 = "Costs " + cost2 +" mana. On a " + cooldown + " round cooldown.";
 
     static boolean targetsEnemies = true;
     static boolean targetsAllies = false;
@@ -47,7 +47,7 @@ public class FireStorm extends Ability {
 
         for (int i = 0; i < effectList.size(); i++) {
             if (effectList.get(i).getCasterID() == playerID) {
-                if (effectList.get(i).getEffectID() == 6) {
+                if (effectList.get(i).getEffectID() == 9) {
                     if (effectList.get(i).getValue() == 3) {
                         System.out.print(name2);
 
@@ -89,17 +89,17 @@ public class FireStorm extends Ability {
 
         for (int i = 0; i < effectList.size(); i++) {
             if (effectList.get(i).getCasterID() == casterID) {
-                if (effectList.get(i).getEffectID() == 6) {
+                if (effectList.get(i).getEffectID() == 9) {
                     if (effectList.get(i).getValue() == 3) {
                         System.out.println("You call upon Hell Fire on the Arena!");
 
                         damage(casterID, playerList);
 
                         Burn.add(casterID, casterID, value2, duration2,abilityID, stackable, playerList, effectList);
-                        DrainResource.call(casterID, casterID, cost, playerList);
+                        DrainResource.call(casterID, casterID, cost2, playerList);
                         AddCooldown.call(casterID, cooldown, 4,   playerList);
-                        
-                        finished = true;
+
+                        return true;
                     }
                 }
             }
@@ -146,5 +146,4 @@ public class FireStorm extends Ability {
             }
         }
     }
-
 }

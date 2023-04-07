@@ -16,12 +16,12 @@ public class ArcaneShot extends Ability {
         super(abilityID, name, value, cost, CD, isCastable, isPassive);
     }
     static int abilityID = 6;
-    static int value = 60;
-    static int cost = 60;
-    static int value2 = 80;
+    static int value = 70;
+    static int cost = 70;
+    static int value2 = 85;
     static int cost2 = 75;
     static String name = "1) Arcane Shot: ";
-    static String name2 = "1) Arcane Blast:";
+    static String name2 = "1) Arcane Blast: ";
     static String info = "Deal " + value + " damage to an enemy. Costs " + cost + " Mana.";
     static String info2 = "Deal " + value2 + " damage to an enemy. Costs " + cost2 + " Mana.";
     static boolean targetsEnemies = true;
@@ -80,7 +80,6 @@ public class ArcaneShot extends Ability {
             }
             DealDamage.call(casterID, targetID, value, playerList);
             DrainResource.call(casterID, casterID, cost, playerList);
-            System.out.println("Before we go in arcance blast");
             MageArcaneBlast.add(casterID, abilityID, playerList, effectList);
             finished = true;
         }

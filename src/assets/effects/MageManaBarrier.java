@@ -1,7 +1,7 @@
 package assets.effects;
 
 import assets.Effect;
-import assets.actions.MageMastery;
+import assets.abilities.Spellbook;
 import engine.game.Player;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class MageManaBarrier extends Effect {
 
     public static void add(int casterID, int abilityID, List<Player> playerList, List<Effect> effectList) {
 
-        MageMastery.call(casterID, abilityID, effectID, name, playerList, effectList);
+        Spellbook.call(casterID, abilityID, effectID, name, playerList, effectList);
 
     }
 }

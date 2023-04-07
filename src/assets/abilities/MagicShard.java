@@ -24,7 +24,7 @@ public class MagicShard extends Ability {
     static int value2b = 80;
     static String name = "2) Magic Shard: ";
     static String info = "Restore " + valuea +" mana to yourself, or " + valueb + " mana to an ally.";
-    static String name2 = "2) Magic Crystal";
+    static String name2 = "2) Magic Crystal: ";
     static String info2 = "Restore " + value2a +" mana to yourself, or " + value2b + " mana to an ally.";
     static boolean targetsEnemies = false;
     static boolean targetsAllies = true;
@@ -36,7 +36,7 @@ public class MagicShard extends Ability {
     public static boolean checkAvailability(int playerID, List<Player> playerList){
         for (int i = 0; i < effectList.size(); i++) {
             if (effectList.get(i).getCasterID() == playerID) {
-                if (effectList.get(i).getEffectID() == 6) {
+                if (effectList.get(i).getEffectID() == 7) {
                     if (effectList.get(i).getValue() == 3) {
                         System.out.print(name2);
                         System.out.println(info2);
@@ -58,7 +58,7 @@ public class MagicShard extends Ability {
         }else {
             for (int i = 0; i < effectList.size(); i++) {
                 if (effectList.get(i).getCasterID() == casterID) {
-                    if (effectList.get(i).getEffectID() == 6) {
+                    if (effectList.get(i).getEffectID() == 7) {
                         if (effectList.get(i).getValue() == 3) {
                             if (playerList.get(targetID).getID() != playerList.get(casterID).getID()) {
 

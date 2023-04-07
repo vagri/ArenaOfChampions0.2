@@ -15,7 +15,7 @@ public class Mage extends Champion {
 
     static int championID = 1;
     static String name = "Mage";
-    static int[] abilities = {5,6,7,8,9,};// 10,11,12,13 are the mage's alternate abilities
+    static int[] abilities = {5,6,7,8,9,};
     static int maxHP = 240;
     static int maxR = 400;
     static int resourceID = 0;
@@ -35,11 +35,9 @@ public class Mage extends Champion {
             FireStorm.finishCast(casterID, playerList);
         }
 
-
         System.out.println("Choose ability to cast:");
         finished = false;
         do{
-
             availability[1] = ArcaneShot.checkAvailability(casterID,playerList);
             availability[2] = MagicShard.checkAvailability(casterID,playerList);
             availability[3] = ManaShield.checkAvailability(casterID,playerList);

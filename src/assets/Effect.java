@@ -5,6 +5,7 @@ import assets.effects.ThornShield;
 import engine.game.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static engine.game.Player.playerList;
@@ -40,11 +41,11 @@ public class Effect {
     public static List<Effect> update(int casterID){
         int activeEffects = 0;
 
-        for(int i = 0 ; i < effectList.size();i++){
+        for(int i = effectList.size() -1 ; i >= 0;i--){
             activeEffects++;                                                        //count all the effects found
             if(effectList.get(i).getCasterID() == casterID) {                       //look for effects that the caster made
                 effectList.get(i).setDuration(effectList.get(i).getDuration() - 1); //lower their duration
-                if (effectList.get(i).getDuration() == -1) {                         //if an effect reaches 0
+                if (effectList.get(i).getDuration() == -1) {                         //if an effect reaches -1
                     effectList.remove(i);                                       //remove the effect
                     activeEffects--;                                            //and lower the counter
                 }
@@ -153,11 +154,14 @@ public class Effect {
     @Override
     public String toString() {
         if(isVisible){
-            return playerList.get(targetID).getName() + ": "+ name + ", value=" + value +", remaining rounds=" + duration + ", from: " + playerList.get(casterID).getName();
+            if(effectID == 5 || effectID == 2 || effectID == 6 || effectID == 7 || effectID == 8 || effectID == 9) {
+                return playerList.get(targetID).getName() + ": " + name;
+            }else {
+                return playerList.get(targetID).getName() + ": " + name + ", value=" + value + ", remaining rounds=" + duration + ", from: " + playerList.get(casterID).getName();
+            }
         }else{
             return "";
         }
-
     }
 
     public int getTargetID() {

@@ -21,7 +21,7 @@ public class Player extends PlayerStats{
     static int maxR;
     static int currentR;
     static String resource;
-    static int CDRemaining[] = {0,0,0,0,0};
+    static int[] CDRemaining = new int[5];
     static boolean isDead;
 
 
@@ -61,6 +61,9 @@ public class Player extends PlayerStats{
                 resource = "Rage";
                 break;
 
+        }
+        for (int i = 0; i < 5; i++) {
+            CDRemaining[i] = 0;
         }
 
         isDead = false;
