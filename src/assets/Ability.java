@@ -115,6 +115,7 @@ public class Ability {
 
     public static int instantPick(int casterID,int team1size,int team2size, List<Player> playerList, boolean targetsEnemies, boolean targetsAllies, boolean targetself) {
 
+        
         if(targetsAllies == false && targetsEnemies == false && targetself==true){// check if this its self cast ONLY
             return casterID;// this may break
         }else if(playerList.get(casterID).getTeamID()==1){// if not check the team to get the correct measures, this is for team 1 player
