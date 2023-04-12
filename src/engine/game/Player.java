@@ -5,6 +5,7 @@ import assets.Champion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Player extends PlayerStats{
 
@@ -25,43 +26,73 @@ public class Player extends PlayerStats{
     static boolean isDead;
 
 
-    public static List<Player> loadStats(String name, int classID, List<Champion> championList){
-        setPlayerStats(classID, championList);
-        generatePlayerID();
-        playerList.add(new Player(id,name,teamID,classID,maxHP,currentHP,maxR,currentR,resource,CDRemaining,isDead));
+    public static List<Player> loadStats(int mode, List<Champion> championList) {
 
+        for (int i = 0; i < 2; i++) {
+            System.out.println("Team " + (i + 1) + ".");
+            for (int j = 0; j < mode; j++) {
+                System.out.println("Player " + (j + 1) + ", choose name!");
+                String name = chooseName();
+                System.out.println(name + ", choose champion!");
+                int classID = chooseClass();
+                setPlayerStats(classID, championList);
+
+                if(i==0){
+                    playerList.add(new Player(j+1, name, i+1, classID, maxHP, currentHP, maxR, currentR, resource, CDRemaining, isDead));
+                }else{
+                    playerList.add(new Player(j+mode+1, name, i+1, classID, maxHP, currentHP, maxR, currentR, resource, CDRemaining, isDead));
+                }
+
+            }
+        }
         return playerList;
     }
 
-    public static void generatePlayerID(){
-            if(playerList.size() == 0){
-                id = 1;
-                teamID = 1;
-            }else{
-                id = 2;
-                teamID = 2;
-            }
+    public static String chooseName(){
+        Scanner reader = new Scanner(System.in);
+        String name = reader.nextLine();
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
+    public static int chooseClass(){
+        System.out.println("0 for Executioner.");
+        System.out.println("1 for mage.");
+        String classID;
+
+        do{
+            Scanner reader = new Scanner(System.in);
+            classID = reader.nextLine();
+            switch(classID){
+                case "0":
+                    System.out.println("You have chosen the Executioner");
+                    return 0;
+                case "1":
+                    System.out.println("You have chosen the Mage");
+                    return 1;
+                default:
+                    System.out.println("You need to choose 0 or 1, not " + classID);
+                    classID = null;
+            }
+        }while(classID == null);
+        return 0;
+
+    }
     public static void setPlayerStats(int classID, List<Champion> championList){
         maxHP = championList.get(classID).getMaxHP();
         currentHP = maxHP;
-        maxR = championList.get(classID).getMaxR();
-        if(championList.get(classID).getResource() == 0){
-            currentR = maxR;
-        }else if(championList.get(classID).getResource() == 1){
-            currentR = 0;
-        }
 
+        maxR = championList.get(classID).getMaxR();
         switch(championList.get(classID).getResource()){
             case 0:
                 resource = "Mana";
+                currentR = maxR;
                 break;
             case 1:
                 resource = "Rage";
+                currentR = 0;
                 break;
-
         }
+
         for (int i = 0; i < 5; i++) {
             CDRemaining[i] = 0;
         }

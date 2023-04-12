@@ -22,18 +22,22 @@ public class Game extends Player{
     static List<Champion> championList = new ArrayList<>();
 
     static int roundCounter = 0;
-    static int lastPlayerID = 0;
+    static int lastPlayerID;
+    static int lastTeamID;
 
-    public static void startGame(String name1, String name2, int classID1, int classID2){
+    public static void startGame(int mode){
         championList = Champion.loadStats();
         System.out.println("Loading...");
-        playerList = Player.loadStats(name1, classID1, championList);
-        playerList = Player.loadStats(name2, classID2, championList);
+        playerList = Player.loadStats(mode, championList);
+
 
         System.out.println("Starting Game...");
 
+        lastPlayerID = mode*2;
+        lastTeamID = 2;
+
         do{
-            round();
+            round(mode);
         }while(Player.isTeamDead() == 0);
 
         if(Player.isTeamDead() == 3){
@@ -45,21 +49,44 @@ public class Game extends Player{
         }
     }
 
-    public static void round(){
+    public static void round(int mode) {
         roundCounter++;
+
         System.out.println("==================={ Round " + roundCounter + "! }========================");
 
-        turn(playerList.get(0).getID());
-        turn(playerList.get(1).getID());
+        long timeInMilliSeconds = 1000;
+        long timestamp = System.currentTimeMillis();
 
+        do {
+
+        } while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
+
+        for (int i = 0; i < playerList.size(); i++) {
+            if(lastPlayerID == (mode*2)){
+                System.out.println("we are at the last player whose id is= " + (mode*2-1));
+                turn(1);
+            }else{
+                if(lastTeamID == 1){
+                    System.out.println("last team was 1, so the id is= " + (lastPlayerID+mode));
+                    turn(lastPlayerID+mode);
+                }else{
+                    System.out.println("last team was 2, so the id is= " + (lastPlayerID-mode+1));
+                    turn(lastPlayerID-mode+1);
+                }
+            }
+            timeInMilliSeconds = 1000;
+            timestamp = System.currentTimeMillis();
+
+            do {
+
+            } while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
+        }
     }
 
     public static void turn(int casterid){
-
         for(Player player : playerList){
             System.out.println(player.toString());
         }
-
 
         casterid--;
 
@@ -67,7 +94,7 @@ public class Game extends Player{
 
         System.out.println("________________[ Effects ]____________________");
         Effect.update(casterid);    //lower the effects by 1 round
-        lowerCD(casterid);          //lower the cooldown as well
+        lowerCD(casterid);          //lower the cooldowns as well
 
         if(playerList.get(casterid).isDead()){//if the caster is dead skip turn
 
@@ -83,6 +110,9 @@ public class Game extends Player{
                 Ability.choose(casterid, state, playerList);
             }
         }
+
+        lastPlayerID = playerList.get(casterid).getID();
+        lastTeamID = playerList.get(casterid).getTeamID();
     }
 
     public static void lowerCD(int id){
@@ -121,5 +151,9 @@ public class Game extends Player{
             }
         }
         return "Normal";                                            // return normal if the player can move on.
+    }
+
+    public static int whichPlayerStarts( List<Player> playerList){
+        return 0;
     }
 }

@@ -25,5 +25,6 @@ public class DrainResource extends Action {
             System.out.println(playerList.get(casterID).getName() + " drained from " + playerList.get(targetID).getName() +", " + value +
                     " " + playerList.get(targetID).getResource());
         }
+
     }
 }

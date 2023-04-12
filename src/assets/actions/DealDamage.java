@@ -31,5 +31,6 @@ public class DealDamage extends Action {
             double rageGained = ((double) value / playerList.get(targetID).getMaxHP()) * 100.0;//get percent max health lost
             RestoreResource.call(targetID, targetID, (int)rageGained, playerList);               // and add it to their rage bar
         }
+
     }
 }

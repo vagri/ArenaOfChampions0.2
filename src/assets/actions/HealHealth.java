@@ -30,5 +30,5 @@ public class HealHealth extends Action{
         }
 
         Injured.update(targetID, targetID, playerList.get(targetID).getCurrentHP(), -1, -1, false, playerList, effectList);
-    }
+            }
 }

@@ -59,6 +59,12 @@ public class Ability {
             for(Player player : playerList){
                 System.out.println(player.toString());
             }
+            long timeInMilliSeconds = 1000;
+            long timestamp = System.currentTimeMillis();
+
+            do {
+
+            } while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
             System.out.println("Press 0 to choose another ability.");
 
 

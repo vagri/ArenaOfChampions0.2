@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Press 0 to start the game.");
         Scanner reader = new Scanner(System.in);
-        int start = reader.nextInt();
-        if(start == 0){
+        String start = reader.nextLine();
+        if(start.equals("0")){
             System.out.println("Launching...");
             Startup.openLobby();
         }else{

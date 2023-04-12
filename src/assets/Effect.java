@@ -60,6 +60,13 @@ public class Effect {
             System.out.println("None.");                                            //if no effect are found, print none.
         }
 
+        long timeInMilliSeconds = 1000;
+        long timestamp = System.currentTimeMillis();
+
+        do {
+
+        } while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
+
         return effectList;
     }
 
