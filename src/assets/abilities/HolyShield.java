@@ -15,7 +15,7 @@ public class HolyShield extends Ability {
     }
     static int abilityID = 12;
     static int value = 75;
-    static int cost = 60;
+    static int cost = 70;
     static boolean stackable = false;
     static int duration = 2;
     static String name = "2) Holy Shield: ";

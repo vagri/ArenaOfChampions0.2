@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Player extends PlayerStats{
 
-    public static List<Player> playerList = new ArrayList<>();
+public class Player extends PlayerStats{
 
     public Player(int ID, String name,int teamID, int championID, Integer maxHP, Integer currentHP, Integer maxR, Integer currentR, String resource, int CDRemaining[], Boolean isDead) {
         super(ID, name,teamID, championID, maxHP, currentHP, maxR, currentR, resource, CDRemaining, isDead);
@@ -27,6 +26,8 @@ public class Player extends PlayerStats{
 
 
     public static List<Player> loadStats(int mode, List<Champion> championList) {
+
+        List<Player> playerList = new ArrayList<>();
 
         for (int i = 0; i < 2; i++) {
             System.out.println("Team " + (i + 1) + ".");
@@ -104,14 +105,14 @@ public class Player extends PlayerStats{
         isDead = false;
     }
 
-    public static void isPlayerDead(int playerID){
+    public static void isPlayerDead(int playerID, List<Player> playerList){
         if(playerList.get(playerID).getCurrentHP() <= 0){
             playerList.get(playerID).setDead(true);
             System.out.println(playerList.get(playerID).getName() + " has been slain!");
         }
     }
 
-    public static int isTeamDead() {
+    public static int isTeamDead(List<Player> playerList) {
         int team = 0;   // 0 for no dead team, 3 for a tie, other for teamID
         int deadPlayersTeam1 = 0;
         int deadPlayersTeam2 = 0;

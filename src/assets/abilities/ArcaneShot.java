@@ -40,10 +40,10 @@ public class ArcaneShot extends Ability {
                         System.out.print(name2);
                         if(playerList.get(playerID).getCurrentR() >= cost2){
                             System.out.println(info2);
-                            available = true;
+                            return true;
                         }else{
                             System.out.println("Not enough mana.");
-                            available = false;
+                            return false;
                         }
                     }
                 }

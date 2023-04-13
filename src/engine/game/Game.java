@@ -3,22 +3,15 @@ package engine.game;
 import assets.Ability;
 import assets.Champion;
 import assets.Effect;
-import assets.abilities.FireStorm;
 import assets.actions.RestoreResource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static assets.Effect.effectList;
 
-public class Game extends Player{
+public class Game{
 
-    public Game(int ID, String name, int teamID, int championID, Integer maxHP, Integer currentHP, Integer maxR, Integer currentR ,String resource, int CDRemaining[], Boolean isDead) {
-        super(ID, name, teamID, championID, maxHP, currentHP, maxR, currentR, resource, CDRemaining, isDead);
-    }
-
-    static List<Player> playerList = new ArrayList<>();
     static List<Champion> championList = new ArrayList<>();
 
     static int roundCounter = 0;
@@ -28,6 +21,7 @@ public class Game extends Player{
     public static void startGame(int mode){
         championList = Champion.loadStats();
         System.out.println("Loading...");
+        List<Player> playerList = new ArrayList<>();
         playerList = Player.loadStats(mode, championList);
 
 
@@ -37,19 +31,19 @@ public class Game extends Player{
         lastTeamID = 2;
 
         do{
-            round(mode);
-        }while(Player.isTeamDead() == 0);
+            round(mode, playerList);
+        }while(Player.isTeamDead(playerList) == 0);
 
-        if(Player.isTeamDead() == 3){
+        if(Player.isTeamDead(playerList) == 3){
             System.out.println("Somehow, its a TIE!");
-        }else if(Player.isTeamDead() == 1){
+        }else if(Player.isTeamDead(playerList) == 1){
             System.out.println("Team 1 has been defeated!");
-        } else if (Player.isTeamDead() == 2) {
+        } else if (Player.isTeamDead(playerList) == 2) {
             System.out.println("Team 2 has been defeated!");
         }
     }
 
-    public static void round(int mode) {
+    public static void round(int mode, List<Player> playerList) {
         roundCounter++;
 
         System.out.println("==================={ Round " + roundCounter + "! }========================");
@@ -63,12 +57,12 @@ public class Game extends Player{
 
         for (int i = 0; i < playerList.size(); i++) {
             if(lastPlayerID == (mode*2)){
-                turn(1);
+                turn(1, playerList);
             }else{
                 if(lastTeamID == 1){
-                    turn(lastPlayerID+mode);
+                    turn(lastPlayerID+mode, playerList);
                 }else{
-                    turn(lastPlayerID-mode+1);
+                    turn(lastPlayerID-mode+1, playerList);
                 }
             }
             timeInMilliSeconds = 1000;
@@ -80,9 +74,9 @@ public class Game extends Player{
         }
     }
 
-    public static void turn(int casterid){
+    public static void turn(int casterid, List<Player> playerList){
         for(Player player : playerList){
-            System.out.println(player.toString());
+            System.out.println(player.toString(playerList));
         }
 
         casterid--;
@@ -91,7 +85,7 @@ public class Game extends Player{
 
         System.out.println("________________[ Effects ]____________________");
         Effect.update(casterid);    //lower the effects by 1 round
-        lowerCD(casterid);          //lower the cooldowns as well
+        lowerCD(casterid, playerList);          //lower the cooldowns as well
 
         if(playerList.get(casterid).isDead()){//if the caster is dead skip turn
 
@@ -112,13 +106,13 @@ public class Game extends Player{
         lastTeamID = playerList.get(casterid).getTeamID();
     }
 
-    public static void lowerCD(int id){
+    public static void lowerCD(int id, List<Player> playerList){
         int[] CDarray = new int[5];
 
         /*CDarray = playerList.get(0).getCDRemaining();
         System.out.println("CDs of " + playerList.get(0).getName());
         for(int i = 0;i<=4;i++){
-                System.out.println(CDarray[i]);
+            System.out.println(CDarray[i]);
         }
 
         CDarray = playerList.get(1).getCDRemaining();

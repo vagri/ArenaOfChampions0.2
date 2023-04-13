@@ -1,6 +1,6 @@
 package engine.game;
 
-import java.util.Arrays;
+import java.util.List;
 
 class PlayerStats {
 
@@ -118,8 +118,7 @@ class PlayerStats {
         Resource = resource;
     }
 
-    @Override
-    public String toString() {
+    public String toString(List<Player> playerList) {
         return "Player " +  ID + ": " + name + ", team=" + teamID +", HP=" + currentHP +
                 "/" + maxHP + ", " + Resource + "=" + currentR + "/" + maxR;
     }

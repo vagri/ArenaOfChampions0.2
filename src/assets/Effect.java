@@ -2,13 +2,11 @@ package assets;
 
 import assets.effects.Shield;
 import assets.effects.ThornShield;
+import engine.game.Game;
 import engine.game.Player;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import static engine.game.Player.playerList;
 
 public class Effect {
     private int effectID;
@@ -70,7 +68,7 @@ public class Effect {
         return effectList;
     }
 
-    public static int checkPlayerEffects(int casterID, int targetID, int value, int actionID){
+    public static int checkPlayerEffects(int casterID, int targetID, int value, int actionID, List<Player> playerList){
 
         if(actionID == 0) {
             for (int i = 0; i < effectList.size(); i++) {
@@ -160,15 +158,18 @@ public class Effect {
 
     @Override
     public String toString() {
-        if(isVisible){
+        return "";
+        /*if(isVisible){
             if(effectID == 5 || effectID == 2 || effectID == 6 || effectID == 7 || effectID == 8 || effectID == 9) {
                 return playerList.get(targetID).getName() + ": " + name;
             }else {
-                return playerList.get(targetID).getName() + ": " + name + ", value=" + value + ", remaining rounds=" + duration + ", from: " + playerList.get(casterID).getName();
+                return Game.playerList.get(targetID).getName() + ": " + name + ", value=" + value + ", remaining rounds=" + duration + ", from: " + Game.playerList.get(casterID).getName();
             }
         }else{
             return "";
         }
+        */
+
     }
 
     public int getTargetID() {

@@ -8,6 +8,7 @@ import engine.game.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Champion {
 
     private int championID;
@@ -18,7 +19,6 @@ public class Champion {
     private int resource;
     private int type;
 
-
     public Champion(int championID, String name, int[] abilities, int maxHP, int maxR, int resource, int type) {
         this.championID = championID;
         this.name = name;
@@ -28,8 +28,8 @@ public class Champion {
         this.resource = resource;
         this.type = type;
     }
-    public static List<Champion> championList = new ArrayList<>();
 
+    public static List<Champion> championList = new ArrayList<>();
 
     public static List<Champion> loadStats(){
         Executioner.load();

@@ -61,7 +61,7 @@ public class Ability {
 
             System.out.println("Pick a target:");
             for(Player player : playerList){
-                System.out.println(player.toString());
+                System.out.println(player.toString(playerList));
             }
             long timeInMilliSeconds = 1000;
             long timestamp = System.currentTimeMillis();

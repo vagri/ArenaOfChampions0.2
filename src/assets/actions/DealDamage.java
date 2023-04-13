@@ -19,13 +19,13 @@ public class DealDamage extends Action {
 
     public static void call(int casterID, int targetID, int value, List<Player> playerList){
 
-        value = Effect.checkPlayerEffects(casterID, targetID, value, actionID);
+        value = Effect.checkPlayerEffects(casterID, targetID, value, actionID, playerList);
 
         playerList.get(targetID).setCurrentHP(playerList.get(targetID).getCurrentHP() - value);
         System.out.println(playerList.get(casterID).getName() + " did " + value + " damage to " + playerList.get(targetID).getName());
 
         Injured.update(targetID, targetID, playerList.get(targetID).getCurrentHP(), -1, -1, false, playerList, effectList);
-        Player.isPlayerDead(targetID);
+        Player.isPlayerDead(targetID, playerList);
 
         if((!playerList.get(targetID).isDead()) && playerList.get(targetID).getResource() == "Rage"){// if the target uses rage
             double rageGained = ((double) value / playerList.get(targetID).getMaxHP()) * 100.0;//get percent max health lost

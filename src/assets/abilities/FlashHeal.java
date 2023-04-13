@@ -3,6 +3,7 @@ package assets.abilities;
 import assets.Ability;
 import assets.actions.DealDamage;
 import assets.actions.DrainResource;
+import assets.actions.HealHealth;
 import engine.game.Player;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class FlashHeal extends Ability {
     }
     static int abilityID = 13;
     static int value = 70;
-    static int cost = 80;
+    static int cost = 60;
     static String name = "3) Flash Heal: ";
     static String info = "Heal yourself or an ally for " + value + " health. Costs " + cost + " mana.";
     static boolean targetsEnemies = false;
@@ -42,7 +43,7 @@ public class FlashHeal extends Ability {
         if(targetID == -2) {
             finished = false;
         }else{
-            DealDamage.call(casterID, targetID, value, playerList);
+            HealHealth.call(casterID, targetID, value, playerList);
             DrainResource.call(casterID, casterID, cost, playerList);
             TouchedByLight.cast(casterID, targetID, playerList);
             finished = true;

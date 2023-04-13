@@ -13,7 +13,7 @@ public class Smite extends Ability {
     }
     static int abilityID = 11;
     static int value = 45;
-    static int cost = 40;
+    static int cost = 35;
     static String name = "1) Smite: ";
     static String info = "Deal " + value + " damage to an enemy. Costs " + cost + " Mana.";
     static boolean targetsEnemies = true;

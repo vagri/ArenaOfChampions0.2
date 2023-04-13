@@ -52,17 +52,17 @@ public class GrandWish extends Ability {
         System.out.println("You call upon the heavens to aid your team!");
 
         int teamsize = 0;
-        for(int i = 0 ; i < effectList.size();i++){
-            if(playerList.get(i).getTeamID() == playerList.get(casterID).getTeamID() && !playerList.get(i).isDead()) {
+        for(int i = 0 ; i < playerList.size();i++){
+            if (playerList.get(i).getTeamID() == playerList.get(casterID).getTeamID() && !playerList.get(i).isDead()) {
                 teamsize++; //find how many teammates are alive
             }
         }
 
-        int splitvalue = value/teamsize; //get the value each teamate will heal, with the the total being the value
+        double splitvalue = value/teamsize; //get the value each teamate will heal, with the the total being the value
 
         for(int i = 0 ; i < effectList.size();i++){
             if(playerList.get(i).getTeamID() == playerList.get(casterID).getTeamID() && !playerList.get(i).isDead()){
-                HealHealth.call(casterID, i, splitvalue, playerList); // if this player is a teammate and alive, heal them
+                HealHealth.call(casterID, i, (int)(splitvalue), playerList); // if this player is a teammate and alive, heal them
                 TouchedByLight.cast(casterID, i, playerList);
             }
         }
