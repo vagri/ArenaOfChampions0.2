@@ -2,6 +2,7 @@ package assets;
 
 import assets.champions.Executioner;
 import assets.champions.Mage;
+import assets.champions.Priest;
 import engine.game.Player;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Champion {
     public static List<Champion> loadStats(){
         Executioner.load();
         Mage.load();
+        Priest.load();
         return championList;
     }
 

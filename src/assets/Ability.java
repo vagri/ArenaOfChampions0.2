@@ -2,6 +2,7 @@ package assets;
 
 import assets.champions.Executioner;
 import assets.champions.Mage;
+import assets.champions.Priest;
 import engine.game.Player;
 
 import java.util.List;
@@ -34,6 +35,9 @@ public class Ability {
                 break;
             case 1:
                 Mage.play(casterID,state,playerList);
+                break;
+            case 2:
+                Priest.play(casterID,state,playerList);
                 break;
         }
     }
@@ -115,7 +119,6 @@ public class Ability {
 
     public static int instantPick(int casterID,int team1size,int team2size, List<Player> playerList, boolean targetsEnemies, boolean targetsAllies, boolean targetself) {
 
-        
         if(targetsAllies == false && targetsEnemies == false && targetself==true){// check if this its self cast ONLY
             return casterID;// this may break
         }else if(playerList.get(casterID).getTeamID()==1){// if not check the team to get the correct measures, this is for team 1 player
@@ -129,7 +132,7 @@ public class Ability {
                 return casterID;
             }else if((targetsEnemies == false && targetsAllies == true && targetself == false)&&(team1size == 2) ){//if there is one ally and you cannot target yourself
                 for (int i = 0; i < playerList.size(); i++) {
-                    if (playerList.get(i).getTeamID() == 1) {// find the ally
+                    if (playerList.get(i).getTeamID() == 1 && playerList.get(i).getID() != casterID) {// find the ally
                         return i;
                     }
                 }
@@ -151,7 +154,7 @@ public class Ability {
                 }
             }
         }
-        return casterID;
+        return -2;
     }
 
     public int getAbilityID() {

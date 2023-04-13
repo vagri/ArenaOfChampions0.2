@@ -63,14 +63,11 @@ public class Game extends Player{
 
         for (int i = 0; i < playerList.size(); i++) {
             if(lastPlayerID == (mode*2)){
-                System.out.println("we are at the last player whose id is= " + (mode*2-1));
                 turn(1);
             }else{
                 if(lastTeamID == 1){
-                    System.out.println("last team was 1, so the id is= " + (lastPlayerID+mode));
                     turn(lastPlayerID+mode);
                 }else{
-                    System.out.println("last team was 2, so the id is= " + (lastPlayerID-mode+1));
                     turn(lastPlayerID-mode+1);
                 }
             }

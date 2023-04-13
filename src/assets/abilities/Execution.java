@@ -60,6 +60,9 @@ public class Execution extends Ability {
                 System.out.println(playerList.get(casterID).getName() + " will now attempt to Execute " + playerList.get(targetID).getName() + "!");
                 DealDamage.call(casterID, targetID, value, playerList);
                 DrainResource.call(casterID, casterID, cost, playerList);
+                if(!playerList.get(targetID).isDead()){
+                    GrieviousWounds.cast(casterID, targetID, playerList);
+                }
                 finished = true; //target is indeed injured and is now propably dead
             }else{
                 System.out.println("Cannot Execute a non injured target!");
@@ -67,11 +70,6 @@ public class Execution extends Ability {
                 finished = false; //target is not injured and the caster should choose a new target
             }
         }
-
-        if(!playerList.get(targetID).isDead()){
-            GrieviousWounds.cast(casterID, targetID, playerList);
-        }
-
         return finished;
     }
 

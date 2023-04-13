@@ -95,7 +95,6 @@ public class FireStorm extends Ability {
 
                         damage(casterID, playerList);
 
-                        Burn.add(casterID, casterID, value2, duration2,abilityID, stackable, playerList, effectList);
                         DrainResource.call(casterID, casterID, cost2, playerList);
                         AddCooldown.call(casterID, cooldown, 4,   playerList);
 
@@ -130,7 +129,7 @@ public class FireStorm extends Ability {
 
     public static void damage(int casterID, List<Player> playerList){
         for(int i = 0; i < playerList.size();i++){
-            if(playerList.get(i).getTeamID() != playerList.get(casterID).getTeamID()){
+            if(playerList.get(i).getTeamID() != playerList.get(casterID).getTeamID() && !playerList.get(i).isDead()){
                 DealDamage.call(casterID, i, value, playerList);
                 Burn.add(casterID, i, value2, duration2,abilityID, stackable, playerList, effectList);
             }

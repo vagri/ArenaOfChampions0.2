@@ -23,7 +23,7 @@ public class RestoreResource extends Action {
         if(casterID == targetID){
             System.out.println(playerList.get(casterID).getName() + " gained " + value + " " + playerList.get(targetID).getResource());
         }else{
-            System.out.println(playerList.get(casterID).getName() + " granted " + playerList.get(targetID).getName() +", " + value +
+            System.out.println(playerList.get(casterID).getName() + " granted " + playerList.get(targetID).getName() +" " + value +
                     " " + playerList.get(targetID).getResource());
         }
     }

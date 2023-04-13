@@ -56,7 +56,8 @@ public class Player extends PlayerStats{
 
     public static int chooseClass(){
         System.out.println("0 for Executioner.");
-        System.out.println("1 for mage.");
+        System.out.println("1 for Mage.");
+        System.out.println("2 for Priest.");
         String classID;
 
         do{
@@ -69,6 +70,9 @@ public class Player extends PlayerStats{
                 case "1":
                     System.out.println("You have chosen the Mage");
                     return 1;
+                case "2":
+                    System.out.println("You have chosen the Priest");
+                    return 2;
                 default:
                     System.out.println("You need to choose 0 or 1, not " + classID);
                     classID = null;

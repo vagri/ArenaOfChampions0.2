@@ -63,7 +63,14 @@ public class MagicShard extends Ability {
                             if (playerList.get(targetID).getID() != playerList.get(casterID).getID()) {
 
                                 if (playerList.get(targetID).getID() != playerList.get(casterID).getID()) {
-                                    RestoreResource.call(casterID, targetID, value2b, playerList);//mastery and ally
+                                    if(playerList.get(targetID).getResource() == "Mana"){
+                                        RestoreResource.call(casterID, targetID, value2b, playerList);//mastery and ally
+                                    }else{// if the target does not have mana, cancel the spell
+                                        System.out.println("Your target has " + playerList.get(targetID).getResource() + ", not Mana!");
+                                        return false;
+                                    }
+
+
                                 } else {
                                     RestoreResource.call(casterID, targetID, value2a, playerList);//mastery and self
                                 }
@@ -74,9 +81,14 @@ public class MagicShard extends Ability {
                 }
             }
             if (playerList.get(targetID).getID() != playerList.get(casterID).getID()) {
-                RestoreResource.call(casterID, targetID, valueb, playerList);// no mastery and ally
+                    if(playerList.get(targetID).getResource() == "Mana"){
+                    RestoreResource.call(casterID, targetID, valueb, playerList);// no mastery and ally
+                }else{// if the target does not have mana, cancel the spell
+                    System.out.println("Your target has " + playerList.get(targetID).getResource() + ", not Mana!");
+                    return false;
+                }
             } else {
-                RestoreResource.call(casterID, targetID, valuea, playerList);// no mastery and self
+                    RestoreResource.call(casterID, targetID, valuea, playerList);// no mastery and self
             }
             MageMagicCrystal.add(casterID, abilityID, playerList, effectList);
             finished = true;
